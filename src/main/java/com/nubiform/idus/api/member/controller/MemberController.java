@@ -1,5 +1,6 @@
 package com.nubiform.idus.api.member.controller;
 
+import com.nubiform.idus.IdusResponse;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +28,7 @@ public class MemberController {
     }
 
     @GetMapping("/members")
-    public List<Member> getMembers() {
-        return memberService.getMembers();
+    public IdusResponse<List<Member>> getMembers() {
+        return IdusResponse.success(memberService.getMembers());
     }
 }
