@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+#    volumes:
+#      - /Users/nubiform/docker/volumes/mysql:/var/lib/mysql
