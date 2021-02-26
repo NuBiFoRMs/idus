@@ -1,3 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/idus
+    username: root
+    password: root
+
+mybatis:
+  mapper-locations: classpath:/query/*.xml
 
 # swagger-ui custom path
-springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.swagger-ui.path: /swagger-ui.html
