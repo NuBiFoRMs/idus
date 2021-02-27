@@ -14,10 +14,23 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
 
-    public List<Member> getMembers() {
-        if (true) {
-            throw IdusException.of("ddsdsfsdfd");
+    public Member signIn(String memberId, String password) {
+        Member member = memberMapper.getMember(memberId, password);
+
+        if (member == null) {
+            throw IdusException.of("invalid username or password");
         }
+
+        return memberMapper.getMember(memberId, password);
+    }
+
+    public List<Member> getMembers() {
+        List<Member> members = memberMapper.getMembers();
+
+        if (members.size() == 0) {
+            throw IdusException.of("No Data");
+        }
+
         return memberMapper.getMembers();
     }
 }

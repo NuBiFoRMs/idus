@@ -22,9 +22,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/sign-in")
-    @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.", parameters = {@Parameter(name = "id", description = "회원아이디")})
-    public String signIn(String id) {
-        return "OK";
+    @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.", parameters = {@Parameter(name = "id", description = "회원아이디"), @Parameter(name = "password", description = "회원비밀번호")})
+    public Member signIn(String id, String password) {
+        return memberService.signIn(id, password);
     }
 
     @GetMapping("/members")
