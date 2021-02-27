@@ -7,9 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,8 +26,14 @@ public class MemberController {
         return memberService.signIn(id, password);
     }
 
+    @PostMapping("/sign-up")
+    @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.", parameters = {@Parameter(name = "member", description = "회원정보")})
+    public boolean signUp(@RequestBody Member member) {
+        return memberService.signUp(member);
+    }
+
     @GetMapping("/members")
-    public IdusResponse<List<Member>> getMembers() {
+    public IdusResponse getMembers() {
         return IdusResponse.success(memberService.getMembers());
     }
 }

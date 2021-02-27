@@ -33,4 +33,11 @@ public class MemberService {
 
         return memberMapper.getMembers();
     }
+
+    public boolean signUp(Member member) {
+
+        memberMapper.setMember(member);
+
+        return true;
+    }
 }

@@ -3,23 +3,30 @@
 <mapper namespace="com.nubiform.idus.api.member.repository.MemberMapper">
     <select id="getMember" resultType="com.nubiform.idus.api.member.model.Member">
         SELECT memberId
-             , memberName
-             , nickName
-             , phone
-             , email
-             , gender
-          FROM members
-         WHERE memberId = #{memberId}
-           AND password = #{password}
+        , memberName
+        , nickName
+        , phone
+        , email
+        , gender
+        FROM members
+        WHERE memberId = #{memberId}
+        AND password = #{password}
     </select>
+
+    <insert id="setMember">
+        INSERT INTO members
+        (memberId, memberName, nickName, password, phone, email, gender)
+        VALUES
+        (#{memberId}, #{memberName}, #{nickName}, #{password}, #{phone}, #{email}, #{gender})
+    </insert>
 
     <select id="getMembers" resultType="com.nubiform.idus.api.member.model.Member">
         SELECT memberId
-             , memberName
-             , nickName
-             , phone
-             , email
-             , gender
-          FROM members
+        , memberName
+        , nickName
+        , phone
+        , email
+        , gender
+        FROM members
     </select>
 </mapper>

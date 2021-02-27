@@ -11,4 +11,5 @@ import java.util.List;
 public interface MemberMapper {
     public Member getMember(String memberId, String password);
     public List<Member> getMembers();
+    public void setMember(Member member);
 }
