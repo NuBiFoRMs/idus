@@ -23,24 +23,14 @@ DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
   `orderNumber` int(12) NOT NULL,
-  `orderDate` timestamp NOT NULL,
-  `memberNumber` int(12) NOT NULL,
-  PRIMARY KEY (`orderNumber`),
-  KEY `memberNumber` (`memberNumber`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`memberNumber`) REFERENCES `members` (`memberNumber`)
-) ENGINE=InnoDB;
-
-insert  into `orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`status`,`comments`,`memberNumber`) values 
-
-(10100,'2003-01-06','2003-01-13','2003-01-10','Shipped',NULL,103),
-
-(10101,'2003-01-09','2003-01-18','2003-01-11','Shipped','Check on availability.',112);
-
-CREATE TABLE `orderdetails` (
-  `orderNumber` int(12) NOT NULL,
-  `detailNumber` int(12) NOT NULL,
+  `paymentDate` timestamp NOT NULL,
   `product` varchar(50) NOT NULL,
-  PRIMARY KEY (`orderNumber`, `orderNumber`),
-  KEY `memberNumber` (`memberNumber`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`memberNumber`) REFERENCES `members` (`memberNumber`)
+  `memberId` varchar(50) NOT NULL,
+  PRIMARY KEY (`orderNumber`),
+  KEY `memberId` (`memberId`),
+  CONSTRAINT `orders_fk_1` FOREIGN KEY (`memberId`) REFERENCES `members` (`memberId`)
 ) ENGINE=InnoDB;
+
+insert  into `orders`(`orderNumber`,`paymentDate`,`product`,`memberId`) values
+
+(10100,'2003-01-13','Apple','nubiform');
