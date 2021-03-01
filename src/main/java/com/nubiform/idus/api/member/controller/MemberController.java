@@ -2,6 +2,8 @@ package com.nubiform.idus.api.member.controller;
 
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
+import com.nubiform.idus.config.response.IdusErrorResponse;
+import com.nubiform.idus.config.response.IdusResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,8 +29,11 @@ public class MemberController {
 
     @PostMapping("/sign-up")
     @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.", parameters = {@Parameter(name = "member", description = "회원정보")})
-    public boolean signUp(@RequestBody Member member) {
-        return memberService.signUp(member);
+    public IdusResponse signUp(@RequestBody Member member) {
+        if (memberService.signUp(member))
+            return new IdusResponse();
+        else
+            return new IdusErrorResponse();
     }
 
     @GetMapping("/sign-out")
@@ -37,7 +42,14 @@ public class MemberController {
         return memberService.signOut();
     }
 
+    @GetMapping("/member")
+    @Operation(summary = "회원정보", description = "회원 정보조회를 수행합니다.", parameters = {@Parameter(name = "id", description = "회원아이디")})
+    public Member getMember(String id) {
+        return memberService.getMember(id);
+    }
+
     @GetMapping("/members")
+    @Operation(summary = "전체회원정보조회", description = "전체 회원 정보조회를 수행합니다.")
     public List<Member> getMembers() {
         return memberService.getMembers();
     }
