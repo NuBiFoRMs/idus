@@ -28,8 +28,8 @@ DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
   `orderNumber` int(12) NOT NULL,
+  `productName` varchar(50) NOT NULL,
   `paymentDate` timestamp NOT NULL,
-  `product` varchar(50) NOT NULL,
   `memberId` varchar(50) NOT NULL,
   PRIMARY KEY (`orderNumber`),
   KEY `memberId` (`memberId`),
@@ -37,6 +37,6 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB;
 
 /*
-insert  into `orders`(`orderNumber`,`paymentDate`,`product`,`memberId`) values
-(10100,'2003-01-13','Apple','nubiform');
+insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
+(10100,'Apple','2003-01-13','nubiform');
 */
