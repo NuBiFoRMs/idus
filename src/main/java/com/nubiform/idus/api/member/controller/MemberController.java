@@ -7,28 +7,39 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/member")
-@Tag(name = "Member", description = "멤버관련 블라블라")
+@Tag(name = "Member", description = "멤버관련 api")
 public class MemberController {
 
     private final MemberService memberService;
 
     @GetMapping("/sign-in")
-    @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.", parameters = {@Parameter(name = "id", description = "회원아이디")})
-    public String signIn(String id) {
-        return "OK";
+    @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.", parameters = {@Parameter(name = "id", description = "회원아이디"), @Parameter(name = "password", description = "회원비밀번호")})
+    public Member signIn(String id, String password) {
+        return memberService.signIn(id, password);
+    }
+
+    @PostMapping("/sign-up")
+    @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.", parameters = {@Parameter(name = "member", description = "회원정보")})
+    public boolean signUp(@RequestBody Member member) {
+        return memberService.signUp(member);
+    }
+
+    @GetMapping("/sign-out")
+    @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.")
+    public boolean signOut() {
+        return memberService.signOut();
     }
 
     @GetMapping("/members")
-    public IdusResponse<List<Member>> getMembers() {
+    public IdusResponse getMembers() {
         return IdusResponse.success(memberService.getMembers());
     }
 }
