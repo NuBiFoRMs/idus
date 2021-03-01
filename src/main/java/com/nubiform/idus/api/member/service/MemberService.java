@@ -29,17 +29,22 @@ public class MemberService {
     }
 
     public boolean signUp(Member member) {
-        // email validation
-        String emailRegex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
-        if (!member.getEmail().matches(emailRegex))
-            throw IdusException.of("invalid email address");
-
         // nickName validation
         String nickNameRegex = "^[a-z]+$";
         if (!member.getNickName().matches(nickNameRegex))
             throw IdusException.of("invalid nickname");
 
-        // duplicate valication
+        // phone validation
+        String phoneRegex = "^[0-9]+$";
+        if (!member.getPhone().matches(phoneRegex))
+            throw IdusException.of("invalid phone number");
+
+        // email validation
+        String emailRegex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        if (!member.getEmail().matches(emailRegex))
+            throw IdusException.of("invalid email address");
+
+        // duplicate validation
         if (memberMapper.getMember(member.getMemberId()) != null)
             throw IdusException.of("duplicate user account");
 
