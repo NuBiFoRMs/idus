@@ -19,6 +19,7 @@ public class ErrorControllerAdvice {
     @ExceptionHandler(IdusException.class)
     public ErrorResponse idusExceptionHandle(HttpServletRequest request, HttpServletResponse response, IdusException ex) {
         log.error("Request Error : {} {}", ex.getStatus(), ex.getMessage());
+        response.setStatus(ex.getStatus());
         return new ErrorResponse(ex.getStatus(), ex.getMessage());
     }
 
