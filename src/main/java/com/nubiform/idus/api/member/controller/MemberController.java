@@ -39,7 +39,7 @@ public class MemberController {
     }
 
     @GetMapping("/members")
-    public IdusResponse getMembers() {
-        return IdusResponse.success(memberService.getMembers());
+    public List<Member> getMembers() {
+        return memberService.getMembers();
     }
 }
