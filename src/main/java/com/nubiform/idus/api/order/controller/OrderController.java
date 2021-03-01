@@ -3,14 +3,16 @@ package com.nubiform.idus.api.order.controller;
 import com.nubiform.idus.IdusResponse;
 import com.nubiform.idus.api.order.model.Order;
 import com.nubiform.idus.api.order.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/order")
@@ -20,7 +22,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/orders")
-    public List<Order> getOrders() {
-        return orderService.getOrders();
+    @Operation(summary = "주문목록조회", description = "주문 목록을 조회합니다.", parameters = {@Parameter(name = "id", description = "회원아이디")})
+    public List<Order> getOrders(@RequestParam(required = false) String id) {
+        return orderService.getOrders(id);
     }
 }

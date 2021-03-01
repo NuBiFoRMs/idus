@@ -16,8 +16,8 @@ public class OrderService {
 
     private final OrderMapper orderMapper;
 
-    public List<Order> getOrders() {
-        List<Order> orders = orderMapper.getOrders();
+    public List<Order> getOrders(String memberId) {
+        List<Order> orders = orderMapper.getOrders(memberId);
 
         if (orders.size() == 0) {
             throw IdusException.of("no data");

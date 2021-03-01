@@ -7,5 +7,27 @@
         , paymentDate
         , memberId
         FROM orders
+        WHERE 1 = 1
+        <if test="memberId != null and memberId != ''">
+            AND memberId = #{memberId}
+        </if>
+    </select>
+
+    <select id="getMemberOrders" resultType="com.nubiform.idus.api.order.model.Order">
+        SELECT mem.memberId
+             , mem.memberName
+             , mem.nickName
+             , mem.phone
+             , mem.email
+             , mem.gender
+             , ord.orderNumber
+             , ord.productName
+             , ord.paymentDate
+          FROM members mem
+             , (SELECT orderNumber, productName, paymentDate, memberId
+                     , ROW_NUMBER() OVER(PARTITION BY memberId ORDER BY paymentDate DESC, orderNumber DESC) RANK
+                  FROM orders
+               ) ord
+         WHERE mem.memberId = ord.memberId
     </select>
 </mapper>
