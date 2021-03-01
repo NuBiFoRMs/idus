@@ -45,6 +45,6 @@ public class MemberService {
             throw IdusException.of("no data");
         }
 
-        return memberMapper.getMembers();
+        return members;
     }
 }
