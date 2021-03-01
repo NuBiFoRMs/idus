@@ -2,6 +2,7 @@ package com.nubiform.idus.config.error;
 
 import com.nubiform.idus.config.response.IdusErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingRequestCookieException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,17 +27,17 @@ public class ErrorControllerAdvice {
 
     @ExceptionHandler({MissingServletRequestParameterException.class, MissingRequestCookieException.class, MethodArgumentTypeMismatchException.class, BindException.class})
     public IdusErrorResponse badRequestExceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        return idusExceptionHandle(request, response, new IdusException(400, ex.getMessage()));
+        return idusExceptionHandle(request, response, new IdusException(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public IdusErrorResponse noHandlerFoundExceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        return idusExceptionHandle(request, response, new IdusException(404, ex.getMessage()));
+        return idusExceptionHandle(request, response, new IdusException(HttpStatus.NOT_FOUND.value(), ex.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
     public IdusErrorResponse exceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        return idusExceptionHandle(request, response, new IdusException(500, ex.getMessage()));
+        return idusExceptionHandle(request, response, new IdusException(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage()));
     }
 
 }
