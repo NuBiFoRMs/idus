@@ -1,5 +1,6 @@
 package com.nubiform.idus.api.order.service;
 
+import com.nubiform.idus.api.order.model.MemberOrder;
 import com.nubiform.idus.api.order.model.Order;
 import com.nubiform.idus.api.order.repository.OrderMapper;
 import com.nubiform.idus.config.error.IdusException;
@@ -24,5 +25,15 @@ public class OrderService {
         }
 
         return orders;
+    }
+
+    public List<MemberOrder> getMemberOrders(String memberName, String email) {
+        List<MemberOrder> memberOrders = orderMapper.getMemberOrders(memberName, email);
+
+        if (memberOrders.size() == 0) {
+            throw IdusException.of("no data");
+        }
+
+        return memberOrders;
     }
 }

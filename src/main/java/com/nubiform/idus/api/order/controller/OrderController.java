@@ -1,6 +1,7 @@
 package com.nubiform.idus.api.order.controller;
 
 import com.nubiform.idus.IdusResponse;
+import com.nubiform.idus.api.order.model.MemberOrder;
 import com.nubiform.idus.api.order.model.Order;
 import com.nubiform.idus.api.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,5 +26,11 @@ public class OrderController {
     @Operation(summary = "주문목록조회", description = "주문 목록을 조회합니다.", parameters = {@Parameter(name = "id", description = "회원아이디")})
     public List<Order> getOrders(@RequestParam(required = false) String id) {
         return orderService.getOrders(id);
+    }
+
+    @GetMapping("/member-orders")
+    @Operation(summary = "회원주문목록조회", description = "회원 주문 목록을 조회합니다.", parameters = {@Parameter(name = "name", description = "회원이름"), @Parameter(name = "email", description = "회원이메일")})
+    public List<MemberOrder> getMemberOrders(@RequestParam(required = false) String name, @RequestParam(required = false) String email) {
+        return orderService.getMemberOrders(name, email);
     }
 }

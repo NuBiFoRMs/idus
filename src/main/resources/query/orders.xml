@@ -13,7 +13,7 @@
         </if>
     </select>
 
-    <select id="getMemberOrders" resultType="com.nubiform.idus.api.order.model.Order">
+    <select id="getMemberOrders" resultType="com.nubiform.idus.api.order.model.MemberOrder">
         SELECT mem.memberId
              , mem.memberName
              , mem.nickName
@@ -25,9 +25,16 @@
              , ord.paymentDate
           FROM members mem
              , (SELECT orderNumber, productName, paymentDate, memberId
-                     , ROW_NUMBER() OVER(PARTITION BY memberId ORDER BY paymentDate DESC, orderNumber DESC) RANK
+                     , ROW_NUMBER() OVER(PARTITION BY memberId ORDER BY paymentDate DESC, orderNumber DESC) LAST_ORDER
                   FROM orders
                ) ord
          WHERE mem.memberId = ord.memberId
+           AND LAST_ORDER = 1
+        <if test="memberName != null and memberName != ''">
+            AND mem.memberName = #{memberName}
+        </if>
+        <if test="email != null and email != ''">
+            AND email = #{email}
+        </if>
     </select>
 </mapper>

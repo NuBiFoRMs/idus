@@ -39,4 +39,10 @@ CREATE TABLE `orders` (
 /*
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
 (10100,'Apple','2003-01-13','nubiform');
+
+insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
+(10101,'Radio','2003-01-12','nubiform');
+
+insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
+(10102,'Orange','2003-01-13','nubiform');
 */
