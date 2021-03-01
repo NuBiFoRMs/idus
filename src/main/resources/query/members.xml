@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nubiform.idus.api.member.repository.MemberMapper">
-    <select id="getMember" resultType="com.nubiform.idus.api.member.model.Member">
+    <select id="signIn" resultType="com.nubiform.idus.api.member.model.Member">
         SELECT memberId
         , memberName
         , nickName
@@ -19,6 +19,17 @@
         VALUES
         (#{memberId}, #{memberName}, #{nickName}, #{password}, #{phone}, #{email}, #{gender})
     </insert>
+
+    <select id="getMember" resultType="com.nubiform.idus.api.member.model.Member">
+        SELECT memberId
+        , memberName
+        , nickName
+        , phone
+        , email
+        , gender
+        FROM members
+        WHERE memberId = #{memberId}
+    </select>
 
     <select id="getMembers" resultType="com.nubiform.idus.api.member.model.Member">
         SELECT memberId

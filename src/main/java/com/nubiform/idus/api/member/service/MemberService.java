@@ -18,7 +18,7 @@ public class MemberService {
     private final MemberMapper memberMapper;
 
     public Member signIn(String memberId, String password) {
-        Member member = memberMapper.getMember(memberId, EncryptionUtils.encrypt(password));
+        Member member = memberMapper.signIn(memberId, EncryptionUtils.encrypt(password));
 
         if (member == null) {
             throw IdusException.of("invalid username or password");
@@ -36,6 +36,16 @@ public class MemberService {
 
     public boolean signOut() {
         return true;
+    }
+
+    public Member getMember(String memberId) {
+        Member member = memberMapper.getMember(memberId);
+
+        if (member == null) {
+            throw IdusException.of("no data");
+        }
+
+        return member;
     }
 
     public List<Member> getMembers() {

@@ -38,7 +38,14 @@ public class MemberController {
         return memberService.signOut();
     }
 
+    @GetMapping("/member")
+    @Operation(summary = "회원정보", description = "회원 정보조회를 수행합니다.", parameters = {@Parameter(name = "id", description = "회원아이디")})
+    public Member getMember(String id) {
+        return memberService.getMember(id);
+    }
+
     @GetMapping("/members")
+    @Operation(summary = "전체회원정보조회", description = "전체 회원 정보조회를 수행합니다.")
     public List<Member> getMembers() {
         return memberService.getMembers();
     }
