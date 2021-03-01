@@ -37,6 +37,6 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB;
 
 /*
-insert  into `orders`(`orderNumber`,`paymentDate`,`product`,`memberId`) values
-(10100,'2003-01-13','Apple','nubiform');
+insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
+(10100,'Apple','2003-01-13','nubiform');
 */
