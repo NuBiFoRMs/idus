@@ -1,6 +1,7 @@
 package com.nubiform.idus.config.error;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 public class IdusException extends RuntimeException {
@@ -10,6 +11,11 @@ public class IdusException extends RuntimeException {
     public IdusException(int status, String message) {
         super(message);
         this.status = status;
+    }
+
+    public IdusException(HttpStatus httpStatus) {
+        super(httpStatus.getReasonPhrase());
+        this.status = httpStatus.value();
     }
 
     public static IdusException of(String message) {
