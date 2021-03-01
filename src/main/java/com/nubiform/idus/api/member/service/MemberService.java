@@ -29,6 +29,11 @@ public class MemberService {
     }
 
     public boolean signUp(Member member) {
+        // memberId validation
+        String memberIdRegex = "^[a-zA-Z]{8,}$";
+        if (!member.getMemberId().matches(memberIdRegex))
+            throw IdusException.of("invalid user id");
+
         // memberName validation
         String memberNameRegex = "^[a-zA-Z가-힣]+$";
         if (!member.getMemberName().matches(memberNameRegex))
