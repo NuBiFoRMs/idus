@@ -1,6 +1,10 @@
+set @@global.sql_mode = "";
+
 CREATE DATABASE `idus` CHARACTER SET utf8;
 
 USE `idus`;
+
+SELECT @@global.sql_mode;
 
 DROP TABLE IF EXISTS `members`;
 
@@ -8,39 +12,37 @@ CREATE TABLE `members` (
   `memberId` varchar(50) NOT NULL,
   `memberName` varchar(50) NOT NULL,
   `nickName` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(64) NOT NULL,
   `phone` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `gender` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`memberId`)
 ) ENGINE=InnoDB;
 
+/*
 insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-
-('nubiform','SangQ','NuBiFoRM','1234','1234','nubiform@abc.com');
+('nubiform','SangQChoi','NuBiFoRM','1234','1234','nubiform@abc.com');
+*/
 
 DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
   `orderNumber` int(12) NOT NULL,
-  `orderDate` timestamp NOT NULL,
-  `memberNumber` int(12) NOT NULL,
+  `productName` varchar(50) NOT NULL,
+  `paymentDate` timestamp NOT NULL,
+  `memberId` varchar(50) NOT NULL,
   PRIMARY KEY (`orderNumber`),
-  KEY `memberNumber` (`memberNumber`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`memberNumber`) REFERENCES `members` (`memberNumber`)
+  KEY `memberId` (`memberId`),
+  CONSTRAINT `orders_fk_1` FOREIGN KEY (`memberId`) REFERENCES `members` (`memberId`)
 ) ENGINE=InnoDB;
 
-insert  into `orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`status`,`comments`,`memberNumber`) values 
+/*
+insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
+(10100,'Apple','2003-01-13','nubiform');
 
-(10100,'2003-01-06','2003-01-13','2003-01-10','Shipped',NULL,103),
+insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
+(10101,'Radio','2003-01-12','nubiform');
 
-(10101,'2003-01-09','2003-01-18','2003-01-11','Shipped','Check on availability.',112);
-
-CREATE TABLE `orderdetails` (
-  `orderNumber` int(12) NOT NULL,
-  `detailNumber` int(12) NOT NULL,
-  `product` varchar(50) NOT NULL,
-  PRIMARY KEY (`orderNumber`, `orderNumber`),
-  KEY `memberNumber` (`memberNumber`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`memberNumber`) REFERENCES `members` (`memberNumber`)
-) ENGINE=InnoDB;
+insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
+(10102,'Orange','2003-01-13','nubiform');
+*/
