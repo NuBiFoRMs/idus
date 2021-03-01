@@ -28,8 +28,8 @@ DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
   `orderNumber` int(12) NOT NULL,
+  `productName` varchar(50) NOT NULL,
   `paymentDate` timestamp NOT NULL,
-  `product` varchar(50) NOT NULL,
   `memberId` varchar(50) NOT NULL,
   PRIMARY KEY (`orderNumber`),
   KEY `memberId` (`memberId`),
