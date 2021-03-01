@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,6 +29,9 @@ public class MemberService {
     }
 
     public boolean signUp(Member member) {
+        if (memberMapper.getMember(member.getMemberId()) != null)
+            throw IdusException.of("duplicate user account");
+
         member.setPassword(EncryptionUtils.encrypt(member.getPassword()));
         memberMapper.setMember(member);
 
