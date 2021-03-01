@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/member")
-@Tag(name = "Member", description = "멤버관련 블라블라")
+@Tag(name = "Member", description = "멤버관련 api")
 public class MemberController {
 
     private final MemberService memberService;
@@ -30,6 +30,12 @@ public class MemberController {
     @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.", parameters = {@Parameter(name = "member", description = "회원정보")})
     public boolean signUp(@RequestBody Member member) {
         return memberService.signUp(member);
+    }
+
+    @GetMapping("/sign-out")
+    @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.")
+    public boolean signOut() {
+        return memberService.signOut();
     }
 
     @GetMapping("/members")

@@ -7,12 +7,12 @@ import java.security.MessageDigest;
 @Slf4j
 public class EncryptionUtils {
     public static String encrypt(String s) {
-        log.debug(s);
+        log.debug("before : {}", s);
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(s.getBytes());
             String encrypted = byteToHexString(messageDigest.digest());
-            log.debug(encrypted);
+            log.debug("after : {}", encrypted);
             return encrypted;
         }
         catch (Exception e) {

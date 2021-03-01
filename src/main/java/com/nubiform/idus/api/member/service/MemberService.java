@@ -27,20 +27,24 @@ public class MemberService {
         return member;
     }
 
-    public List<Member> getMembers() {
-        List<Member> members = memberMapper.getMembers();
-
-        if (members.size() == 0) {
-            throw IdusException.of("No Data");
-        }
-
-        return memberMapper.getMembers();
-    }
-
     public boolean signUp(Member member) {
         member.setPassword(EncryptionUtils.encrypt(member.getPassword()));
         memberMapper.setMember(member);
 
         return true;
+    }
+
+    public boolean signOut() {
+        return true;
+    }
+
+    public List<Member> getMembers() {
+        List<Member> members = memberMapper.getMembers();
+
+        if (members.size() == 0) {
+            throw IdusException.of("no data");
+        }
+
+        return memberMapper.getMembers();
     }
 }

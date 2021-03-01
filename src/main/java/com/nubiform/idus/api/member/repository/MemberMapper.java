@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface MemberMapper {
     public Member getMember(String memberId, String password);
-    public List<Member> getMembers();
     public void setMember(Member member);
+    public List<Member> getMembers();
 }
