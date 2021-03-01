@@ -7,6 +7,9 @@ import lombok.ToString;
 @ToString
 public class IdusErrorResponse extends IdusResponse {
 
+    public IdusErrorResponse() {
+        super(DEFAULT_ERROR, "Error");
+    }
     public IdusErrorResponse(int status) {
         super(status, "Error");
     }

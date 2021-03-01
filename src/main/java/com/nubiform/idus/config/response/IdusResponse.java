@@ -12,6 +12,11 @@ public class IdusResponse {
     private final int status;
     private final String message;
 
+    public IdusResponse() {
+        this.status = DEFAULT_SUCCESS;
+        this.message = "OK";
+    }
+
     public IdusResponse(int status) {
         this.status = status;
         this.message = "OK";
