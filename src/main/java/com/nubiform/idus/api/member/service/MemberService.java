@@ -29,10 +29,20 @@ public class MemberService {
     }
 
     public boolean signUp(Member member) {
+        // memberName validation
+        String memberNameRegex = "^[a-zA-Z가-힣]+$";
+        if (!member.getMemberName().matches(memberNameRegex))
+            throw IdusException.of("invalid user name");
+
         // nickName validation
         String nickNameRegex = "^[a-z]+$";
         if (!member.getNickName().matches(nickNameRegex))
             throw IdusException.of("invalid nickname");
+
+        // password validation
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,}";
+        if (!member.getPassword().matches(passwordRegex))
+            throw IdusException.of("invalid password");
 
         // phone validation
         String phoneRegex = "^[0-9]+$";
