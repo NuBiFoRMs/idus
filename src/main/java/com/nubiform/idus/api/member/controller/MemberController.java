@@ -1,6 +1,5 @@
 package com.nubiform.idus.api.member.controller;
 
-import com.nubiform.idus.IdusResponse;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
