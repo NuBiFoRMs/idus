@@ -10,11 +10,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token) {
         Member member = memberService.getMember(this.getUserPk(token));
-        return new UsernamePasswordAuthenticationToken(member, "");
+        return new UsernamePasswordAuthenticationToken(member, "", Collections.singletonList(new SimpleGrantedAuthority("USER")));
     }
 
     public String getUserPk(String token) {
