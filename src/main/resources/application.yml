@@ -4,8 +4,8 @@ spring:
     url: jdbc:mysql://localhost:3306/idus
     username: root
     password: root
-  mvc.throw-exception-if-no-handler-found: true
-  resources.add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
 
 mybatis:
   mapper-locations: classpath:/query/*.xml
