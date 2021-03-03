@@ -39,6 +39,20 @@ public class ErrorControllerAdvice {
         return idusExceptionHandle(request, response, new IdusException(HttpStatus.NOT_FOUND));
     }
 
+    // 일단추가
+    @ExceptionHandler(AuthenticationException.class)
+    public IdusErrorResponse authenticationExceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+        log.debug("message : {}", ex.getMessage());
+        return idusExceptionHandle(request, response, new IdusException(HttpStatus.UNAUTHORIZED));
+    }
+
+    // 일단추가
+    @ExceptionHandler(AccessDeniedException.class)
+    public IdusErrorResponse accessDeniedExceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+        log.debug("message : {}", ex.getMessage());
+        return idusExceptionHandle(request, response, new IdusException(HttpStatus.FORBIDDEN));
+    }
+
     @ExceptionHandler(Exception.class)
     public IdusErrorResponse exceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.debug("message : {}", ex.getMessage());
