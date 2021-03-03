@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class AuthController {
 
     private final MemberService memberService;
 
+    private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("sign-in")
@@ -39,7 +41,10 @@ public class AuthController {
             throw IdusException.of("invalid username or password");
         }
 
-        if (!EncryptionUtils.encrypt(password).equals(member.getPassword()))
+        log.debug("encoded : {}", passwordEncoder.encode(password));
+        log.debug("member.getPassword() : {}", member.getPassword());
+
+        if (!passwordEncoder.matches(password, member.getPassword()))
             throw IdusException.of("invalid username or password");
 
         List<String> roles = new ArrayList<>();

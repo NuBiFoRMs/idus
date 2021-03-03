@@ -12,7 +12,7 @@ CREATE TABLE `members` (
   `memberId` varchar(50) NOT NULL,
   `memberName` varchar(50) NOT NULL,
   `nickName` varchar(50) NOT NULL,
-  `password` varchar(64) NOT NULL,
+  `password` varchar(256) NOT NULL,
   `phone` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `gender` varchar(50) DEFAULT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE `members` (
 
 /*
 insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform','SangQChoi','NuBiFoRM','f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','1234','nubiform@abc.com');
+('nubiform','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
 */
 
 DROP TABLE IF EXISTS `orders`;
