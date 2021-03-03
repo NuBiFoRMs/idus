@@ -50,7 +50,7 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token) {
         Member member = memberService.getMember(this.getUserPk(token));
-        return new UsernamePasswordAuthenticationToken(member, "", Collections.singletonList(new SimpleGrantedAuthority("USER")));
+        return new UsernamePasswordAuthenticationToken(member, "", Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
     public String getUserPk(String token) {
