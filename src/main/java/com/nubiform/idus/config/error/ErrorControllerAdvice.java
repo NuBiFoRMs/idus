@@ -29,6 +29,7 @@ public class ErrorControllerAdvice {
 
     @ExceptionHandler({MissingServletRequestParameterException.class, MissingRequestCookieException.class, MethodArgumentTypeMismatchException.class, BindException.class})
     public IdusErrorResponse badRequestExceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+        log.debug("message : {}", ex.getMessage());
         return idusExceptionHandle(request, response, new IdusException(HttpStatus.BAD_REQUEST));
     }
 
