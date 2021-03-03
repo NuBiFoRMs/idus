@@ -1,6 +1,5 @@
 package com.nubiform.idus.api.auth.controller;
 
-import com.nubiform.idus.EncryptionUtils;
 import com.nubiform.idus.JwtTokenProvider;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
