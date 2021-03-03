@@ -23,6 +23,7 @@
     <select id="getMember" resultType="com.nubiform.idus.api.member.model.Member">
         SELECT memberId
         , memberName
+        , password
         , nickName
         , phone
         , email
