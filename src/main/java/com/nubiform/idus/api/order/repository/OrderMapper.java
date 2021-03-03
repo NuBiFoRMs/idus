@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface OrderMapper {
-    public List<Order> getOrders(String memberId);
-    public List<MemberOrder> getMemberOrders(String memberName, String email);
+    List<Order> getOrders(String memberId);
+    List<MemberOrder> getMemberOrders(String memberName, String email);
 }
