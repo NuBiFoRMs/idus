@@ -1,5 +1,6 @@
 package com.nubiform.idus.api.member.controller;
 
+import com.nubiform.idus.JwtTokenProvider;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
 import com.nubiform.idus.config.response.IdusErrorResponse;
@@ -11,20 +12,33 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/member")
 @Tag(name = "Member", description = "멤버관련 api")
 public class MemberController {
 
+    private final JwtTokenProvider jwtTokenProvider;
+
     private final MemberService memberService;
 
     @GetMapping("/sign-in")
     @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.", parameters = {@Parameter(name = "id", description = "회원아이디"), @Parameter(name = "password", description = "회원비밀번호")})
-    public Member signIn(String id, String password) {
-        return memberService.signIn(id, password);
+    public String signIn(String id, String password) {
+        Member member = memberService.signIn(id, password);
+        List<String> roles = new ArrayList<>();
+        roles.add("USER");
+
+        String token = jwtTokenProvider.createToken(member.getMemberId(), roles);
+
+        log.debug("memberId : {}", member.getMemberId());
+        log.debug("token : {}", token);
+
+        return token;
     }
 
     @PostMapping("/sign-up")

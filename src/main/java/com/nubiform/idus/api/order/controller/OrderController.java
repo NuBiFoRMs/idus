@@ -5,7 +5,9 @@ import com.nubiform.idus.api.order.model.Order;
 import com.nubiform.idus.api.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.models.parameters.HeaderParameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/orders")
-    @Operation(summary = "주문목록조회", description = "주문 목록을 조회합니다.", parameters = {@Parameter(name = "id", description = "회원아이디")})
+    @Operation(summary = "주문목록조회", description = "주문 목록을 조회합니다.", parameters = {@Parameter(name = "X-AUTH-TOKEN", description = "JWT Token", in = ParameterIn.HEADER), @Parameter(name = "id", description = "회원아이디")})
     public List<Order> getOrders(@RequestParam(required = false) String id) {
         return orderService.getOrders(id);
     }
