@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
@@ -29,9 +30,12 @@ class MemberServiceTest {
     @MockBean
     private PasswordEncoder passwordEncoder;
 
+    @MockBean
+    private StringRedisTemplate redisTemplate;
+
     @BeforeEach
     void before() {
-        this.memberService = new MemberService(memberMapper, passwordEncoder);
+        this.memberService = new MemberService(memberMapper, passwordEncoder, redisTemplate);
 
     }
 

@@ -2,14 +2,17 @@ package com.nubiform.idus.api.auth.controller;
 
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
+import com.nubiform.idus.config.error.IdusException;
 import com.nubiform.idus.config.response.IdusErrorResponse;
 import com.nubiform.idus.config.response.IdusResponse;
 import com.nubiform.idus.config.security.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -52,9 +55,17 @@ public class AuthController {
     }
 
     @PostMapping("/sign-out")
-    @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.")
+    @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.", parameters = {@Parameter(name = "X-AUTH-TOKEN", description = "JWT Token", in = ParameterIn.HEADER)})
     public IdusResponse signOut() {
-        if (memberService.signOut())
+        String token = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+
+        log.debug(SecurityContextHolder.getContext().getAuthentication().toString());
+        log.debug("token : {}", token);
+
+        if (token == null || "".equals(token))
+            throw IdusException.of("there is no authentication");
+
+        if (memberService.signOut(token))
             return new IdusResponse();
         else
             return new IdusErrorResponse();

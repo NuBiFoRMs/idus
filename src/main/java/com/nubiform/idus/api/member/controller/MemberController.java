@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class MemberController {
     @GetMapping("/sign-out")
     @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.")
     public boolean signOut() {
-        return memberService.signOut();
+        return memberService.signOut("");
     }
 
     @GetMapping("/member")

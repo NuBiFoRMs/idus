@@ -8,6 +8,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,6 +33,8 @@ public class JwtTokenProvider {
 
     private final MemberService memberService;
 
+    private final StringRedisTemplate redisTemplate;
+
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
@@ -50,7 +54,7 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token) {
         Member member = memberService.getMember(this.getUserPk(token));
-        return new UsernamePasswordAuthenticationToken(member, "", Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+        return new UsernamePasswordAuthenticationToken(member, token, Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
     public String getUserPk(String token) {
@@ -64,6 +68,11 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+            if (valueOperations.get(token) != null) {
+                log.debug("already signed out");
+                return false;
+            }
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception ex) {
             return false;
