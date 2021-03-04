@@ -20,8 +20,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/**/order/**").hasRole("USER")
-                .antMatchers("/api/**/member/**").permitAll()
+                .antMatchers("/api/**/auth/**").permitAll()
+                .antMatchers("/api/**").hasRole("USER")
                 .antMatchers("/swagger-ui/**").permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
