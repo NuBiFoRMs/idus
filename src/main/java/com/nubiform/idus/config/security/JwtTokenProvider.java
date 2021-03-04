@@ -1,4 +1,4 @@
-package com.nubiform.idus;
+package com.nubiform.idus.config.security;
 
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
