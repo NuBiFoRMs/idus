@@ -10,3 +10,9 @@ services:
       MYSQL_ROOT_PASSWORD: root
 #    volumes:
 #      - /Users/nubiform/docker/volumes/mysql:/var/lib/mysql
+
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
