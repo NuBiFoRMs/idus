@@ -1,6 +1,5 @@
 package com.nubiform.idus.config.security;
 
-import com.nubiform.idus.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
