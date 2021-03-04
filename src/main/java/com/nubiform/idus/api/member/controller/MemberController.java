@@ -1,10 +1,10 @@
 package com.nubiform.idus.api.member.controller;
 
-import com.nubiform.idus.JwtTokenProvider;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
 import com.nubiform.idus.config.response.IdusErrorResponse;
 import com.nubiform.idus.config.response.IdusResponse;
+import com.nubiform.idus.config.security.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
