@@ -1,6 +1,5 @@
 package com.nubiform.idus.config.security;
 
-import com.nubiform.idus.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
