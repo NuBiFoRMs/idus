@@ -1,11 +1,11 @@
 package com.nubiform.idus.api.member.service;
 
-import com.nubiform.idus.EncryptionUtils;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.repository.MemberMapper;
 import com.nubiform.idus.config.error.IdusException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,12 +17,16 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
 
-    public Member signIn(String memberId, String password) {
-        Member member = memberMapper.signIn(memberId, EncryptionUtils.encrypt(password));
+    private final PasswordEncoder passwordEncoder;
 
-        if (member == null) {
+    public Member signIn(String memberId, String password) {
+        Member member = memberMapper.getMember(memberId);
+
+        if (member == null || !passwordEncoder.matches(password, member.getPassword()))
             throw IdusException.of("invalid username or password");
-        }
+
+        log.debug("encoded : {}", passwordEncoder.encode(password));
+        log.debug("member.getPassword() : {}", member.getPassword());
 
         return member;
     }
@@ -62,7 +66,7 @@ public class MemberService {
         if (memberMapper.getMember(member.getMemberId()) != null)
             throw IdusException.of("duplicate user account");
 
-        member.setPassword(EncryptionUtils.encrypt(member.getPassword()));
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
         memberMapper.setMember(member);
 
         return true;
