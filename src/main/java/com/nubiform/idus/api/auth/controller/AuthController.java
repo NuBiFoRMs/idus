@@ -1,17 +1,18 @@
 package com.nubiform.idus.api.auth.controller;
 
-import com.nubiform.idus.JwtTokenProvider;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
 import com.nubiform.idus.config.error.IdusException;
 import com.nubiform.idus.config.response.IdusErrorResponse;
 import com.nubiform.idus.config.response.IdusResponse;
+import com.nubiform.idus.config.security.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,25 +27,12 @@ public class AuthController {
 
     private final MemberService memberService;
 
-    private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("sign-in")
     @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.", parameters = {@Parameter(name = "id", description = "회원아이디"), @Parameter(name = "password", description = "회원비밀번호")})
     public String signIn(@RequestParam String id, @RequestParam String password) {
-        Member member;
-
-        try {
-            member = memberService.getMember(id);
-        } catch (IdusException ex) {
-            throw IdusException.of("invalid username or password");
-        }
-
-        log.debug("encoded : {}", passwordEncoder.encode(password));
-        log.debug("member.getPassword() : {}", member.getPassword());
-
-        if (!passwordEncoder.matches(password, member.getPassword()))
-            throw IdusException.of("invalid username or password");
+        Member member = memberService.signIn(id, password);
 
         List<String> roles = new ArrayList<>();
         roles.add("USER");
@@ -57,10 +45,27 @@ public class AuthController {
         return token;
     }
 
+    @PostMapping("/sign-up")
+    @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.", parameters = {@Parameter(name = "member", description = "회원정보")})
+    public IdusResponse signUp(@RequestBody Member member) {
+        if (memberService.signUp(member))
+            return new IdusResponse();
+        else
+            return new IdusErrorResponse();
+    }
+
     @PostMapping("/sign-out")
-    @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.")
+    @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.", parameters = {@Parameter(name = "X-AUTH-TOKEN", description = "JWT Token", in = ParameterIn.HEADER)})
     public IdusResponse signOut() {
-        if (memberService.signOut())
+        String token = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+
+        log.debug(SecurityContextHolder.getContext().getAuthentication().toString());
+        log.debug("token : {}", token);
+
+        if (token == null || "".equals(token))
+            throw IdusException.of("there is no authentication");
+
+        if (memberService.signOut(token))
             return new IdusResponse();
         else
             return new IdusErrorResponse();
