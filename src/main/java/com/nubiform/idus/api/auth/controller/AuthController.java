@@ -1,6 +1,5 @@
 package com.nubiform.idus.api.auth.controller;
 
-import com.nubiform.idus.api.auth.model.Auth;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
 import com.nubiform.idus.config.error.IdusException;
@@ -10,14 +9,14 @@ import com.nubiform.idus.config.security.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/auth")
 @Tag(name = "Authorization", description = "인증관련 api")
+@ApiResponse(responseCode = "500", description = "Error Message", content = @Content(schema = @Schema(implementation = IdusErrorResponse.class)))
 public class AuthController {
 
     private final MemberService memberService;
@@ -34,9 +34,12 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("sign-in")
-    @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.", parameters = {@Parameter(name = "id", description = "회원아이디"), @Parameter(name = "password", description = "회원비밀번호")})
-    public String signIn(@RequestBody Auth auth) {
-        Member member = memberService.signIn(auth.getId(), auth.getPassword());
+    @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.",
+            parameters = {@Parameter(name = "id", description = "회원아이디"),
+                    @Parameter(name = "password", description = "회원비밀번호")},
+            responses = {@ApiResponse(responseCode = "200", description = "OK")})
+    public String signIn(@RequestParam String id, @RequestParam String password) {
+        Member member = memberService.signIn(id, password);
 
         List<String> roles = new ArrayList<>();
         roles.add("USER");
@@ -50,7 +53,9 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.", parameters = {@Parameter(name = "member", description = "회원정보")})
+    @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.",
+            parameters = {@Parameter(name = "member", description = "회원정보")},
+            responses = {@ApiResponse(responseCode = "200", description = "OK")})
     public IdusResponse signUp(@RequestBody Member member) {
         if (memberService.signUp(member))
             return new IdusResponse();
@@ -59,7 +64,9 @@ public class AuthController {
     }
 
     @PostMapping("/sign-out")
-    @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.", parameters = {@Parameter(name = "X-AUTH-TOKEN", description = "JWT Token", in = ParameterIn.HEADER)})
+    @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.",
+            parameters = {@Parameter(name = "X-AUTH-TOKEN", description = "JWT Token", in = ParameterIn.HEADER)},
+            responses = {@ApiResponse(responseCode = "200", description = "OK")})
     public IdusResponse signOut() {
         String token = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
 
