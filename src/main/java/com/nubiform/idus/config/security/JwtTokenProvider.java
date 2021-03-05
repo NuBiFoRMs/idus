@@ -52,6 +52,7 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token) {
         Auth auth = authService.getAuth(this.getUserPk(token));
+        auth.setToken(token);
         return new UsernamePasswordAuthenticationToken(auth, "", auth.getAuthorities());
     }
 

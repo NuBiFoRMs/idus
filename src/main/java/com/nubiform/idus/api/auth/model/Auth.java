@@ -14,7 +14,7 @@ public class Auth implements UserDetails {
 
     private String memberId;
     private String password;
-    private String roles;
+    private String roles = "ROLE_USER";
     private String token;
 
     @Override

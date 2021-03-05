@@ -64,17 +64,22 @@ public class AuthController {
             parameters = {@Parameter(name = "X-AUTH-TOKEN", description = "JWT Token", in = ParameterIn.HEADER)},
             responses = {@ApiResponse(responseCode = "200", description = "OK")})
     public IdusResponse signOut() {
-        String token = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+        try {
+            Auth auth = (Auth) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String token = auth.getToken();
 
-        log.debug(SecurityContextHolder.getContext().getAuthentication().toString());
-        log.debug("token : {}", token);
+            log.debug(SecurityContextHolder.getContext().getAuthentication().toString());
+            log.debug("token : {}", token);
 
-        if (token == null || "".equals(token))
+            if (token == null || "".equals(token))
+                throw IdusException.of("there is no authentication");
+
+            if (authService.signOut(token))
+                return new IdusResponse();
+            else
+                return new IdusErrorResponse();
+        } catch (Exception ex) {
             throw IdusException.of("there is no authentication");
-
-        if (authService.signOut(token))
-            return new IdusResponse();
-        else
-            return new IdusErrorResponse();
+        }
     }
 }
