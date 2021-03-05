@@ -1,4 +1,4 @@
-package com.nubiform.idus.api.auth;
+package com.nubiform.idus.api.auth.service;
 
 import com.nubiform.idus.api.auth.model.Auth;
 import com.nubiform.idus.api.auth.model.Sign;
@@ -26,7 +26,6 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
 
-    @Transactional(readOnly = true)
     public Auth signIn(Sign sign) {
         Auth auth;
 
