@@ -61,7 +61,10 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("X-AUTH-TOKEN");
+        String header = request.getHeader("Authorization");
+        log.debug("header : {}", header);
+        if (header != null && header.startsWith("Bearer ")) return header.replace("Bearer ", "");
+        return null;
     }
 
     public boolean validateToken(String token) {
