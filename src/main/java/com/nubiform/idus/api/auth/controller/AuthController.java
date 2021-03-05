@@ -1,8 +1,8 @@
 package com.nubiform.idus.api.auth.controller;
 
+import com.nubiform.idus.api.auth.AuthService;
 import com.nubiform.idus.api.auth.model.Auth;
 import com.nubiform.idus.api.member.model.Member;
-import com.nubiform.idus.api.member.service.MemberService;
 import com.nubiform.idus.config.error.IdusException;
 import com.nubiform.idus.config.response.IdusErrorResponse;
 import com.nubiform.idus.config.response.IdusResponse;
@@ -33,7 +33,7 @@ import java.util.List;
 @ApiResponse(responseCode = "500", description = "Error Message", content = @Content(schema = @Schema(implementation = IdusErrorResponse.class)))
 public class AuthController {
 
-    private final MemberService memberService;
+    private final AuthService authService;
 
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -41,7 +41,7 @@ public class AuthController {
     @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.",
             responses = {@ApiResponse(responseCode = "200", description = "OK")})
     public String signIn(@RequestBody Auth auth) {
-        Member member = memberService.signIn(auth.getId(), auth.getPassword());
+        Member member = authService.signIn(auth.getId(), auth.getPassword());
 
         List<String> roles = new ArrayList<>();
         roles.add("USER");
@@ -58,7 +58,7 @@ public class AuthController {
     @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.",
             responses = {@ApiResponse(responseCode = "200", description = "OK")})
     public IdusResponse signUp(@RequestBody Member member) {
-        if (memberService.signUp(member))
+        if (authService.signUp(member))
             return new IdusResponse();
         else
             return new IdusErrorResponse();
@@ -77,7 +77,7 @@ public class AuthController {
         if (token == null || "".equals(token))
             throw IdusException.of("there is no authentication");
 
-        if (memberService.signOut(token))
+        if (authService.signOut(token))
             return new IdusResponse();
         else
             return new IdusErrorResponse();
