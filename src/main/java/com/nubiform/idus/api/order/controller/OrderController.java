@@ -27,14 +27,15 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/orders")
-    @Operation(summary = "주문목록조회", description = "주문 목록을 조회합니다.", parameters = {@Parameter(name = "X-AUTH-TOKEN", description = "JWT Token", in = ParameterIn.HEADER), @Parameter(name = "id", description = "회원아이디")})
+    @Operation(summary = "주문목록조회", description = "주문 목록을 조회합니다.",
+            parameters = {@Parameter(name = "X-AUTH-TOKEN", description = "JWT Token", in = ParameterIn.HEADER),
+                    @Parameter(name = "id", description = "회원아이디")})
     public List<Order> getOrders(@RequestParam(required = false) String id) {
         return orderService.getOrders(id);
     }
 
     @GetMapping("/member-orders")
-    @Operation(summary = "회원주문목록조회",
-            description = "회원 주문 목록을 조회합니다.",
+    @Operation(summary = "회원주문목록조회", description = "회원 주문 목록을 조회합니다.",
             parameters = {@Parameter(name = "name", description = "회원이름"),
                     @Parameter(name = "email", description = "회원이메일"),
                     @Parameter(name = "page", description = "페이지"),

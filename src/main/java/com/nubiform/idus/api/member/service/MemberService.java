@@ -68,7 +68,7 @@ public class MemberService {
 
         // duplicate validation
         if (memberMapper.getMember(member.getMemberId()) != null)
-            throw IdusException.of("duplicate user account");
+            throw IdusException.of("duplicate user account (중복된 회원가입)");
 
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         memberMapper.setMember(member);
