@@ -6,6 +6,7 @@ import com.nubiform.idus.api.order.repository.OrderMapper;
 import com.nubiform.idus.config.error.IdusException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +31,8 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public List<MemberOrder> getMemberOrders(String memberName, String email) {
-        List<MemberOrder> memberOrders = orderMapper.getMemberOrders(memberName, email);
+    public List<MemberOrder> getMemberOrders(String memberName, String email, Pageable pageable) {
+        List<MemberOrder> memberOrders = orderMapper.getMemberOrders(memberName, email, pageable);
 
         if (memberOrders.size() == 0) {
             throw IdusException.of("no data");

@@ -33,8 +33,17 @@ public class OrderController {
     }
 
     @GetMapping("/member-orders")
-    @Operation(summary = "회원주문목록조회", description = "회원 주문 목록을 조회합니다.", parameters = {@Parameter(name = "name", description = "회원이름"), @Parameter(name = "email", description = "회원이메일")})
-    public List<MemberOrder> getMemberOrders(@RequestParam(required = false) String name, @RequestParam(required = false) String email, int page, int size) {
+    @Operation(summary = "회원주문목록조회",
+            description = "회원 주문 목록을 조회합니다.",
+            parameters = {@Parameter(name = "name", description = "회원이름"),
+                    @Parameter(name = "email", description = "회원이메일"),
+                    @Parameter(name = "page", description = "페이지"),
+                    @Parameter(name = "size", description = "조회사이즈")})
+    public List<MemberOrder> getMemberOrders(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
         return orderService.getMemberOrders(name, email, PageRequest.of(page, size));
     }
 }
