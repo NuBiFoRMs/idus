@@ -1,7 +1,7 @@
 package com.nubiform.idus.api.auth.controller;
 
 import com.nubiform.idus.api.auth.AuthService;
-import com.nubiform.idus.api.auth.model.Auth;
+import com.nubiform.idus.api.auth.model.Sign;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.config.error.IdusException;
 import com.nubiform.idus.config.response.IdusErrorResponse;
@@ -40,8 +40,8 @@ public class AuthController {
     @PostMapping("sign-in")
     @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.",
             responses = {@ApiResponse(responseCode = "200", description = "OK")})
-    public String signIn(@RequestBody Auth auth) {
-        Member member = authService.signIn(auth.getId(), auth.getPassword());
+    public String signIn(@RequestBody Sign sign) {
+        Member member = authService.signIn(sign.getId(), sign.getPassword());
 
         List<String> roles = new ArrayList<>();
         roles.add("USER");
