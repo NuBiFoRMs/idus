@@ -1,17 +1,24 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/idus
-    username: root
-    password: root
+  profiles:
+    include: datasource
+
   redis:
     host: localhost
     port: 6379
+
   mvc:
     throw-exception-if-no-handler-found: true
+
+logging:
+  level:
+    com.nubiform: DEBUG
 
 mybatis:
   mapper-locations: classpath:/query/*.xml
 
 # swagger-ui custom path
 springdoc.swagger-ui.path: /swagger-ui.html
+
+management:
+  #endpoints.web.exposure.include: caches, health, metrics
+  endpoints.web.exposure.include: '*'
