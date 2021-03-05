@@ -26,15 +26,25 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
 
-    @Transactional(readOnly = true)
     public Auth signIn(Sign sign) {
-        Auth auth = authMapper.signIn(sign.getId());
+        Auth auth = getAuth(sign.getId());
 
         if (auth == null || !passwordEncoder.matches(sign.getPassword(), auth.getPassword()))
             throw IdusException.of("invalid username or password");
 
         log.debug("encoded : {}", passwordEncoder.encode(sign.getPassword()));
         log.debug("member.getPassword() : {}", auth.getPassword());
+
+        return auth;
+    }
+
+    @Transactional(readOnly = true)
+    public Auth getAuth(String memberId) {
+        Auth auth = authMapper.getAuth(memberId);
+
+        if (auth == null) {
+            throw IdusException.of("no data");
+        }
 
         return auth;
     }

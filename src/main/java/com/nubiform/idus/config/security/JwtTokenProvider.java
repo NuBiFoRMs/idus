@@ -1,6 +1,7 @@
 package com.nubiform.idus.config.security;
 
-import com.nubiform.idus.api.member.model.Member;
+import com.nubiform.idus.api.auth.AuthService;
+import com.nubiform.idus.api.auth.model.Auth;
 import com.nubiform.idus.api.member.service.MemberService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -12,13 +13,11 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
-import java.util.Collections;
 import java.util.Date;
 
 @Slf4j
@@ -31,6 +30,7 @@ public class JwtTokenProvider {
     private long tokenValidTime = 30 * 60 * 1000L;
 
     private final MemberService memberService;
+    private final AuthService authService;
 
     private final StringRedisTemplate redisTemplate;
 
@@ -51,8 +51,8 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        Member member = memberService.getMember(this.getUserPk(token));
-        return new UsernamePasswordAuthenticationToken(member, token, Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+        Auth auth = authService.getAuth(this.getUserPk(token));
+        return new UsernamePasswordAuthenticationToken(auth, "", auth.getAuthorities());
     }
 
     public String getUserPk(String token) {
