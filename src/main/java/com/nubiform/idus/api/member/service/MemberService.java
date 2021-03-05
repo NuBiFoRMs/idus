@@ -6,6 +6,7 @@ import com.nubiform.idus.config.error.IdusException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
 
+    @Transactional(readOnly = true)
     public Member getMember(String memberId) {
         Member member = memberMapper.getMember(memberId);
 
@@ -26,6 +28,7 @@ public class MemberService {
         return member;
     }
 
+    @Transactional(readOnly = true)
     public List<Member> getMembers() {
         List<Member> members = memberMapper.getMembers();
 
