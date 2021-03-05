@@ -1,5 +1,8 @@
 package com.nubiform.idus.api.auth;
 
+import com.nubiform.idus.api.auth.model.Auth;
+import com.nubiform.idus.api.auth.model.Sign;
+import com.nubiform.idus.api.auth.repository.AuthMapper;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.repository.MemberMapper;
 import com.nubiform.idus.config.error.IdusException;
@@ -18,20 +21,22 @@ public class AuthService {
 
     private final MemberMapper memberMapper;
 
+    private final AuthMapper authMapper;
+
     private final PasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
 
     @Transactional(readOnly = true)
-    public Member signIn(String memberId, String password) {
-        Member member = memberMapper.getMember(memberId);
+    public Auth signIn(Sign sign) {
+        Auth auth = authMapper.signIn(sign);
 
-        if (member == null || !passwordEncoder.matches(password, member.getPassword()))
+        if (auth == null || !passwordEncoder.matches(sign.getPassword(), auth.getPassword()))
             throw IdusException.of("invalid username or password");
 
-        log.debug("encoded : {}", passwordEncoder.encode(password));
-        log.debug("member.getPassword() : {}", member.getPassword());
+        log.debug("encoded : {}", passwordEncoder.encode(sign.getPassword()));
+        log.debug("member.getPassword() : {}", auth.getPassword());
 
-        return member;
+        return auth;
     }
 
     @Transactional

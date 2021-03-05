@@ -1,6 +1,7 @@
 package com.nubiform.idus.api.auth.controller;
 
 import com.nubiform.idus.api.auth.AuthService;
+import com.nubiform.idus.api.auth.model.Auth;
 import com.nubiform.idus.api.auth.model.Sign;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.config.error.IdusException;
@@ -22,9 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -41,14 +39,11 @@ public class AuthController {
     @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.",
             responses = {@ApiResponse(responseCode = "200", description = "OK")})
     public String signIn(@RequestBody Sign sign) {
-        Member member = authService.signIn(sign.getId(), sign.getPassword());
+        Auth auth = authService.signIn(sign);
 
-        List<String> roles = new ArrayList<>();
-        roles.add("USER");
+        String token = jwtTokenProvider.createToken(auth.getMemberId());
 
-        String token = jwtTokenProvider.createToken(member.getMemberId(), roles);
-
-        log.debug("memberId : {}", member.getMemberId());
+        log.debug("memberId : {}", auth.getMemberId());
         log.debug("token : {}", token);
 
         return token;

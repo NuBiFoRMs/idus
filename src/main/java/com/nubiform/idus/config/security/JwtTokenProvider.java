@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -40,9 +39,8 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String userPk, List<String> roles) {
+    public String createToken(String userPk) {
         Claims claims = Jwts.claims().setSubject(userPk);
-        claims.put("roles", roles);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims)
