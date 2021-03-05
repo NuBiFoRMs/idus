@@ -28,7 +28,7 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public Auth signIn(Sign sign) {
-        Auth auth = authMapper.signIn(sign);
+        Auth auth = authMapper.signIn(sign.getId());
 
         if (auth == null || !passwordEncoder.matches(sign.getPassword(), auth.getPassword()))
             throw IdusException.of("invalid username or password");

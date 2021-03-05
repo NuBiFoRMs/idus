@@ -5,6 +5,6 @@
         SELECT memberId
         , password
         FROM members
-        WHERE memberId = #{id}
+        WHERE memberId = #{memberId}
     </select>
 </mapper>
