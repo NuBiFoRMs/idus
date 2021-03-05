@@ -9,7 +9,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface MemberMapper {
-    Member signIn(String memberId, String password);
     void setMember(Member member);
     Member getMember(String memberId);
     List<Member> getMembers();
