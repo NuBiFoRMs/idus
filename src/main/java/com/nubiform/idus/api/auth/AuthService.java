@@ -27,7 +27,13 @@ public class AuthService {
     private final StringRedisTemplate redisTemplate;
 
     public Auth signIn(Sign sign) {
-        Auth auth = getAuth(sign.getId());
+        Auth auth;
+
+        try {
+            auth = getAuth(sign.getId());
+        } catch (Exception ex) {
+            throw IdusException.of("invalid username or password");
+        }
 
         if (auth == null || !passwordEncoder.matches(sign.getPassword(), auth.getPassword()))
             throw IdusException.of("invalid username or password");
