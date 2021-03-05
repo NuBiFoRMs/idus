@@ -23,13 +23,13 @@ import java.util.Map;
 public class RoutingDataSourceConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "idus.datasource.write")
+    @ConfigurationProperties(prefix = "idus.datasource.read-only")
     public IdusDataSourceProperty readOnlyDataSourceProperty() {
         return new IdusDataSourceProperty();
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "idus.datasource.read-only")
+    @ConfigurationProperties(prefix = "idus.datasource.write")
     public IdusDataSourceProperty writeDataSourceProperty() {
         return new IdusDataSourceProperty();
     }
