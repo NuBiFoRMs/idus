@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nubiform.idus.api.auth.repository.AuthMapper">
+    <select id="getAuth" resultType="com.nubiform.idus.api.auth.model.Auth">
+        SELECT memberId
+        , password
+        FROM members
+        WHERE memberId = #{memberId}
+    </select>
+</mapper>

@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nubiform.idus.api.member.repository.MemberMapper">
-    <select id="signIn" resultType="com.nubiform.idus.api.member.model.Member">
-        SELECT memberId
-        , memberName
-        , nickName
-        , phone
-        , email
-        , gender
-        FROM members
-        WHERE memberId = #{memberId}
-        AND password = #{password}
-    </select>
-
     <insert id="setMember">
         INSERT INTO members
         (memberId, memberName, nickName, password, phone, email, gender)
@@ -23,7 +11,6 @@
     <select id="getMember" resultType="com.nubiform.idus.api.member.model.Member">
         SELECT memberId
         , memberName
-        , password
         , nickName
         , phone
         , email
@@ -35,7 +22,6 @@
     <select id="getMembers" resultType="com.nubiform.idus.api.member.model.Member">
         SELECT memberId
         , memberName
-        , password
         , nickName
         , phone
         , email

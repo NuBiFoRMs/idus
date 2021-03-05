@@ -4,6 +4,7 @@ import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class MemberController {
 
     @GetMapping("/member")
     @Operation(summary = "회원정보", description = "회원 정보조회를 수행합니다.",
+            security = @SecurityRequirement(name = "Authorization"),
             parameters = {@Parameter(name = "id", description = "회원아이디")})
     public Member getMember(String id) {
         return memberService.getMember(id);
@@ -31,6 +33,7 @@ public class MemberController {
 
     @GetMapping("/members")
     @Operation(summary = "전체회원정보조회",
+            security = @SecurityRequirement(name = "Authorization"),
             description = "전체 회원 정보조회를 수행합니다.")
     public List<Member> getMembers() {
         return memberService.getMembers();

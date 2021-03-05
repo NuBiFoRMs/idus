@@ -1,18 +1,23 @@
 package com.nubiform.idus.api.auth.controller;
 
+import com.nubiform.idus.api.auth.AuthService;
 import com.nubiform.idus.api.auth.model.Auth;
+import com.nubiform.idus.api.auth.model.Sign;
 import com.nubiform.idus.api.member.model.Member;
-import com.nubiform.idus.api.member.service.MemberService;
 import com.nubiform.idus.config.error.IdusException;
 import com.nubiform.idus.config.response.IdusErrorResponse;
 import com.nubiform.idus.config.response.IdusResponse;
 import com.nubiform.idus.config.security.JwtTokenProvider;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,33 +27,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
+@OpenAPIDefinition(info = @Info(title = "Idus Project", version = "v1", description = "Idus Project"))
 @Tag(name = "Authorization", description = "인증관련 api")
+@SecurityScheme(type = SecuritySchemeType.HTTP, scheme = "Bearer", bearerFormat = "JWT", name = "Authorization", in = SecuritySchemeIn.HEADER)
 @ApiResponse(responseCode = "500", description = "Error Message", content = @Content(schema = @Schema(implementation = IdusErrorResponse.class)))
 public class AuthController {
 
-    private final MemberService memberService;
+    private final AuthService authService;
 
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("sign-in")
     @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.",
             responses = {@ApiResponse(responseCode = "200", description = "OK")})
-    public String signIn(@RequestBody Auth auth) {
-        Member member = memberService.signIn(auth.getId(), auth.getPassword());
+    public String signIn(@RequestBody Sign sign) {
+        Auth auth = authService.signIn(sign);
 
-        List<String> roles = new ArrayList<>();
-        roles.add("USER");
+        String token = jwtTokenProvider.createToken(auth.getMemberId());
 
-        String token = jwtTokenProvider.createToken(member.getMemberId(), roles);
-
-        log.debug("memberId : {}", member.getMemberId());
+        log.debug("memberId : {}", auth.getMemberId());
         log.debug("token : {}", token);
 
         return token;
@@ -58,7 +59,7 @@ public class AuthController {
     @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.",
             responses = {@ApiResponse(responseCode = "200", description = "OK")})
     public IdusResponse signUp(@RequestBody Member member) {
-        if (memberService.signUp(member))
+        if (authService.signUp(member))
             return new IdusResponse();
         else
             return new IdusErrorResponse();
@@ -66,20 +67,25 @@ public class AuthController {
 
     @PostMapping("/sign-out")
     @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.",
-            parameters = {@Parameter(name = "X-AUTH-TOKEN", description = "JWT Token", in = ParameterIn.HEADER)},
+            security = @SecurityRequirement(name = "Authorization"),
             responses = {@ApiResponse(responseCode = "200", description = "OK")})
     public IdusResponse signOut() {
-        String token = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+        try {
+            Auth auth = (Auth) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String token = auth.getToken();
 
-        log.debug(SecurityContextHolder.getContext().getAuthentication().toString());
-        log.debug("token : {}", token);
+            log.debug(SecurityContextHolder.getContext().getAuthentication().toString());
+            log.debug("token : {}", token);
 
-        if (token == null || "".equals(token))
+            if (token == null || "".equals(token))
+                throw IdusException.of("there is no authentication");
+
+            if (authService.signOut(token))
+                return new IdusResponse();
+            else
+                return new IdusErrorResponse();
+        } catch (Exception ex) {
             throw IdusException.of("there is no authentication");
-
-        if (memberService.signOut(token))
-            return new IdusResponse();
-        else
-            return new IdusErrorResponse();
+        }
     }
 }
