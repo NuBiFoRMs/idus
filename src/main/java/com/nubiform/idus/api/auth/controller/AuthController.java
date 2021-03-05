@@ -1,5 +1,6 @@
 package com.nubiform.idus.api.auth.controller;
 
+import com.nubiform.idus.api.auth.model.Auth;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
 import com.nubiform.idus.config.error.IdusException;
@@ -13,7 +14,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +35,8 @@ public class AuthController {
 
     @PostMapping("sign-in")
     @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.", parameters = {@Parameter(name = "id", description = "회원아이디"), @Parameter(name = "password", description = "회원비밀번호")})
-    public String signIn(@RequestParam String id, @RequestParam String password) {
-        Member member = memberService.signIn(id, password);
+    public String signIn(@RequestBody Auth auth) {
+        Member member = memberService.signIn(auth.getId(), auth.getPassword());
 
         List<String> roles = new ArrayList<>();
         roles.add("USER");
