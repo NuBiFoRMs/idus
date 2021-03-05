@@ -3,7 +3,6 @@ package com.nubiform.idus.config.datasource;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +18,6 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
-@MapperScan("com.nubiform.idus.api")
 public class RoutingDataSourceConfig {
 
     @Bean
@@ -59,8 +57,8 @@ public class RoutingDataSourceConfig {
     }
 
     @Primary
-    @DependsOn({"routingDataSource"})
     @Bean
+    @DependsOn({"routingDataSource"})
     public DataSource dataSource(DataSource routingDataSource) {
         return new LazyConnectionDataSourceProxy(routingDataSource);
     }

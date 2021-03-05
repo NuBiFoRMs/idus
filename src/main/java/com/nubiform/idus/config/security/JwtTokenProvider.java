@@ -1,7 +1,7 @@
 package com.nubiform.idus.config.security;
 
-import com.nubiform.idus.api.auth.AuthService;
 import com.nubiform.idus.api.auth.model.Auth;
+import com.nubiform.idus.api.auth.service.AuthService;
 import com.nubiform.idus.api.member.service.MemberService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -25,7 +25,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private String secretKey = "nubiform";
+    private String secretKey = "idus";
 
     private long tokenValidTime = 30 * 60 * 1000L;
 

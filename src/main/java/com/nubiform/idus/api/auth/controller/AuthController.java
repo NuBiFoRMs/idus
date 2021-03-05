@@ -1,8 +1,8 @@
 package com.nubiform.idus.api.auth.controller;
 
-import com.nubiform.idus.api.auth.AuthService;
 import com.nubiform.idus.api.auth.model.Auth;
 import com.nubiform.idus.api.auth.model.Sign;
+import com.nubiform.idus.api.auth.service.AuthService;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.config.error.IdusException;
 import com.nubiform.idus.config.response.IdusErrorResponse;
