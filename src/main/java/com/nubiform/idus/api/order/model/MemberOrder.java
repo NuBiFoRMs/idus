@@ -1,10 +1,12 @@
 package com.nubiform.idus.api.order.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class MemberOrder {
     private String memberId;
     private String memberName;
