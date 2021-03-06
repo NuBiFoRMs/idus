@@ -32,16 +32,19 @@ class MemberServiceTest {
     @Test
     @DisplayName("단일 회원 상세 정보 조회")
     void getMember() {
-        Member someMember = new Member();
-        someMember.setMemberId("user");
+        Member someMember01 = new Member();
+        someMember01.setMemberId("user01");
+        Member someMember02 = new Member();
+        someMember02.setMemberId("user02");
 
-        when(memberMapper.getMember("user")).thenReturn(someMember);
+        when(memberMapper.getMember("user01")).thenReturn(someMember01);
+        when(memberMapper.getMember("user02")).thenReturn(someMember02);
 
-        Member member = memberService.getMember("user");
+        assertEquals("user01", memberService.getMember("user01").getMemberId());
+        assertEquals("user02", memberService.getMember("user02").getMemberId());
 
-        assertEquals("user", member.getMemberId());
-
-        verify(memberMapper).getMember("user");
+        verify(memberMapper).getMember("user01");
+        verify(memberMapper).getMember("user02");
     }
 
     @Test
