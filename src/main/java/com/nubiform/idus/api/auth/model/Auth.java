@@ -1,6 +1,5 @@
 package com.nubiform.idus.api.auth.model;
 
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +10,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Data
-@Builder
 public class Auth implements UserDetails {
 
     private String memberId;
