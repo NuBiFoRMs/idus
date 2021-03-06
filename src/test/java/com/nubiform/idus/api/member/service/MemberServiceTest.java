@@ -83,6 +83,7 @@ class MemberServiceTest {
 
         IdusException exception = assertThrows(IdusException.class, () -> memberService.getMembers());
 
+        assertEquals(500, exception.getStatus());
         verify(memberMapper, times(1)).getMembers();
     }
 }
