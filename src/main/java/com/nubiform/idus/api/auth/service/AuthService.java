@@ -26,6 +26,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
 
+    @Transactional(readOnly = true)
     public Auth signIn(Sign sign) {
         Auth auth;
 
