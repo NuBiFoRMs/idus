@@ -39,7 +39,7 @@ $ gradle bootRun
 #### 브라우저
 
 * [http://localhost:8080](http://localhost:8080)
-* [http://localhost:8080/swagger-ui.html](localhost:8080/swagger-ui.html)
+* [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 ## Running the tests / 테스트의 실행
 
