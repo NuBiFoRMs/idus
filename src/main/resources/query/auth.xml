@@ -4,6 +4,7 @@
     <select id="getAuth" resultType="com.nubiform.idus.api.auth.model.Auth">
         SELECT memberId
         , password
+        , roles
         FROM members
         WHERE memberId = #{memberId}
     </select>
