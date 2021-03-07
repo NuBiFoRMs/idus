@@ -4,6 +4,9 @@ CREATE DATABASE `idus` CHARACTER SET utf8;
 
 USE `idus`;
 
+set global time_zone = 'Asia/Seoul';
+set time_zone = 'Asia/Seoul';
+
 SELECT @@global.sql_mode;
 
 DROP TABLE IF EXISTS `members`;
@@ -61,49 +64,47 @@ insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`em
 insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`,`gender`,`roles`) values
 ('testusere','testusere','testusere','{bcrypt}$2a$10$8f.bxwdk1ysDnkqnp6HKCO7MaOPVoSPYsubwb5JNob/IwNJ7UMgIe','0000','user@idus.com', 'male', 'ROLE_USER');
 
-/*
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10100,'Apple','2003-01-13','nubiform00');
+(10100,'Apple','2003-01-13','testusera');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10101,'Radio','2003-01-12','nubiform01');
+(10101,'Radio','2003-01-12','testusera');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10102,'Orange','2003-01-13','nubiform02');
+(10102,'Orange','2003-01-13','testusera');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10103,'Orange','2003-01-13','nubiform03');
+(10103,'Orange','2003-01-13','testuserb');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10104,'Orange','2003-01-13','nubiform04');
+(10104,'Orange','2003-01-13','testuserb');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10105,'Orange','2003-01-13','nubiform05');
+(10105,'Orange','2003-01-13','testuserb');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10106,'Orange','2003-01-13','nubiform06');
+(10106,'Orange','2003-01-13','testuserc');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10107,'Orange','2003-01-13','nubiform07');
+(10107,'Orange','2003-01-13','testuserc');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10108,'Orange','2003-01-13','nubiform08');
+(10108,'Orange','2003-01-13','testuserc');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10109,'Orange','2003-01-13','nubiform09');
+(10109,'Orange','2003-01-13','testuserd');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10110,'Orange','2003-01-13','nubiform10');
+(10110,'Orange','2003-01-13','testuserd');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10111,'Orange','2003-01-13','nubiform11');
+(10111,'Orange','2003-01-13','testuserd');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10112,'Orange','2003-01-13','nubiform11');
+(10112,'Orange','2003-01-13','testusere');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10113,'Orange','2003-01-13','nubiform11');
+(10113,'Orange','2003-01-13','testusere');
 
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
-(10114,'Orange','2003-01-13','nubiform11');
-*/
+(10114,'Orange','2003-01-13','testusere');
