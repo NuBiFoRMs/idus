@@ -2,17 +2,18 @@ version: '3.4'
 
 services:
   mysql:
-    image: mysql
+    image: mysql:8.0
     restart: always
     ports:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
-#    volumes:
-#      - /Users/nubiform/docker/volumes/mysql:/var/lib/mysql
+    volumes:
+      - ./mysql-init-files:/docker-entrypoint-initdb.d
+#      - ./mysql:/var/lib/mysql
 
   redis:
-    image: redis
+    image: redis:alpine
     restart: always
     ports:
       - 6379:6379
