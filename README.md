@@ -40,7 +40,6 @@ $ java -jar build/libs/idus-0.0.1-SNAPSHOT.jar
 ```bash
 $ gradle bootRun
 ```
-#### 브라우저
+#### Swagger UI
 
-* [http://localhost:8080](http://localhost:8080)
 * [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
