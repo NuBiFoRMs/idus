@@ -34,6 +34,9 @@ import org.springframework.web.bind.annotation.RestController;
 @OpenAPIDefinition(info = @Info(title = "Idus Project", version = "v1", description = "Idus Project"))
 @Tag(name = "Authorization", description = "인증관련 api")
 @SecurityScheme(type = SecuritySchemeType.HTTP, scheme = "Bearer", bearerFormat = "JWT", name = "Authorization", in = SecuritySchemeIn.HEADER)
+@ApiResponse(responseCode = "200", description = "OK")
+@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = IdusErrorResponse.class)))
+@ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(schema = @Schema(implementation = IdusErrorResponse.class)))
 @ApiResponse(responseCode = "500", description = "Error Message", content = @Content(schema = @Schema(implementation = IdusErrorResponse.class)))
 public class AuthController {
 
@@ -42,8 +45,7 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("sign-in")
-    @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.",
-            responses = {@ApiResponse(responseCode = "200", description = "OK")})
+    @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.")
     public String signIn(@RequestBody Sign sign) {
         Auth auth = authService.signIn(sign);
 
@@ -56,8 +58,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.",
-            responses = {@ApiResponse(responseCode = "200", description = "OK")})
+    @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.")
     public IdusResponse signUp(@RequestBody Member member) {
         if (authService.signUp(member))
             return new IdusResponse();
@@ -67,8 +68,7 @@ public class AuthController {
 
     @PostMapping("/sign-out")
     @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.",
-            security = @SecurityRequirement(name = "Authorization"),
-            responses = {@ApiResponse(responseCode = "200", description = "OK")})
+            security = @SecurityRequirement(name = "Authorization"))
     public IdusResponse signOut() {
         try {
             Auth auth = (Auth) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

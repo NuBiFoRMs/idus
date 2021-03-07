@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             log.debug("authentication : {}", authentication.toString());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-            httpServletResponse.setHeader("Authorization", "bearer " + token);
+            httpServletResponse.setHeader("Authorization", "Bearer " + token);
         }
         chain.doFilter(request, response);
     }
