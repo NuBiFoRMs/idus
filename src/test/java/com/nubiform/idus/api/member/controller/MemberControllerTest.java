@@ -2,7 +2,7 @@ package com.nubiform.idus.api.member.controller;
 
 import com.nubiform.idus.AbstractControllerTest;
 import com.nubiform.idus.api.member.model.Member;
-import com.nubiform.idus.api.member.service.MemberService;
+import com.nubiform.idus.api.member.repository.MemberMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +23,20 @@ class MemberControllerTest extends AbstractControllerTest {
     @Autowired
     private MemberController memberController;
 
-    @MockBean
-    private MemberService memberService;
-
     @Override
     protected Object controller() {
         return memberController;
     }
+
+    @MockBean
+    private MemberMapper memberMapper;
 
     @Test
     @DisplayName("URI: /api/v1/member/member")
     void getMember() throws Exception {
         Member member = new Member();
         member.setMemberId("user");
-        when(memberService.getMember("user")).thenReturn(member);
+        when(memberMapper.getMember("user")).thenReturn(member);
 
         String token = jwtTokenProvider.createToken("user");
 
@@ -48,16 +48,30 @@ class MemberControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.memberId").value("user"));
 
-        verify(memberService, times(1)).getMember("user");
+        verify(memberMapper, times(1)).getMember("user");
+    }
+
+    @Test
+    @DisplayName("URI: /api/v1/member/member")
+    void getMemberException() throws Exception {
+        when(memberMapper.getMember("user")).thenReturn(null);
+
+        String token = jwtTokenProvider.createToken("user");
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("id", "user");
+        mockMvc.perform(get("/api/v1/member/member")
+                .header("Authorization", "Bearer " + token)
+                .params(params))
+                .andExpect(status().isInternalServerError());
+
+        verify(memberMapper, times(1)).getMember("user");
     }
 
     @Test
     @DisplayName("URI: /api/v1/member/member : Unauthorized")
     void getMemberUnauthorized() throws Exception {
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("id", "user");
-        mockMvc.perform(get("/api/v1/member/member")
-                .params(params))
+        mockMvc.perform(get("/api/v1/member/member"))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -68,7 +82,7 @@ class MemberControllerTest extends AbstractControllerTest {
         Member member = new Member();
         member.setMemberId("user");
         memberList.add(member);
-        when(memberService.getMembers()).thenReturn(memberList);
+        when(memberMapper.getMembers()).thenReturn(memberList);
 
         String token = jwtTokenProvider.createToken("admin");
 
@@ -77,7 +91,21 @@ class MemberControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].memberId").value("user"));
 
-        verify(memberService, times(1)).getMembers();
+        verify(memberMapper, times(1)).getMembers();
+    }
+
+    @Test
+    @DisplayName("URI: /api/v1/member/members : Exception")
+    void getMembersException() throws Exception {
+        when(memberMapper.getMembers()).thenReturn(new ArrayList<>());
+
+        String token = jwtTokenProvider.createToken("admin");
+
+        mockMvc.perform(get("/api/v1/member/members")
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isInternalServerError());
+
+        verify(memberMapper, times(1)).getMembers();
     }
 
     @Test
@@ -87,7 +115,7 @@ class MemberControllerTest extends AbstractControllerTest {
         Member member = new Member();
         member.setMemberId("user");
         memberList.add(member);
-        when(memberService.getMembers()).thenReturn(memberList);
+        when(memberMapper.getMembers()).thenReturn(memberList);
 
         String token = jwtTokenProvider.createToken("useradmin");
 
@@ -96,16 +124,13 @@ class MemberControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].memberId").value("user"));
 
-        verify(memberService, times(1)).getMembers();
+        verify(memberMapper, times(1)).getMembers();
     }
 
     @Test
     @DisplayName("URI: /api/v1/member/members : Unauthorized")
     void getMembersUnauthorized() throws Exception {
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("id", "user");
-        mockMvc.perform(get("/api/v1/member/members")
-                .params(params))
+        mockMvc.perform(get("/api/v1/member/members"))
                 .andExpect(status().isUnauthorized());
     }
 
