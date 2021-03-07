@@ -1,12 +1,8 @@
 package com.nubiform.idus.api.member.controller;
 
 import com.nubiform.idus.AbstractControllerTest;
-import com.nubiform.idus.api.auth.model.Auth;
-import com.nubiform.idus.api.auth.service.AuthService;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.api.member.service.MemberService;
-import com.nubiform.idus.config.security.JwtTokenProvider;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +24,6 @@ class MemberControllerTest extends AbstractControllerTest {
     private MemberController memberController;
 
     @MockBean
-    private AuthService authService;
-
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    @MockBean
     private MemberService memberService;
 
     @Override
@@ -41,35 +31,13 @@ class MemberControllerTest extends AbstractControllerTest {
         return memberController;
     }
 
-    @BeforeEach
-    void before() {
-        Member member = new Member();
-        member.setMemberId("user");
-        when(memberService.getMember("user")).thenReturn(member);
-        member = new Member();
-        member.setMemberId("admin");
-        when(memberService.getMember("admin")).thenReturn(member);
-        member = new Member();
-        member.setMemberId("useradmin");
-        when(memberService.getMember("useradmin")).thenReturn(member);
-
-        Auth auth = new Auth();
-        auth.setMemberId("user");
-        auth.setRoles("ROLE_USER");
-        when(authService.getAuth("user")).thenReturn(auth);
-        auth = new Auth();
-        auth.setMemberId("admin");
-        auth.setRoles("ROLE_ADMIN");
-        when(authService.getAuth("admin")).thenReturn(auth);
-        auth = new Auth();
-        auth.setMemberId("useradmin");
-        auth.setRoles("ROLE_USER,ROLE_ADMIN");
-        when(authService.getAuth("useradmin")).thenReturn(auth);
-    }
-
     @Test
     @DisplayName("URI: /api/v1/member/member")
     void getMember() throws Exception {
+        Member member = new Member();
+        member.setMemberId("user");
+        when(memberService.getMember("user")).thenReturn(member);
+
         String token = jwtTokenProvider.createToken("user");
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
