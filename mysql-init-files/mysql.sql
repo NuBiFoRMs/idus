@@ -16,6 +16,7 @@ CREATE TABLE `members` (
   `phone` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `gender` varchar(50) DEFAULT NULL,
+  `roles` varchar(50) NOT NULL DEFAULT 'ROLE_USER',
   PRIMARY KEY (`memberId`)
 ) ENGINE=InnoDB;
 
@@ -34,6 +35,13 @@ CREATE TABLE `orders` (
 CREATE USER `readonly`;
 ALTER USER `readonly` IDENTIFIED WITH mysql_native_password BY 'readonly';
 GRANT SELECT ON *.* TO `readonly`;
+
+CREATE USER `write`;
+ALTER USER `write` IDENTIFIED WITH mysql_native_password BY 'write';
+GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO `write`;
+
+insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`, `gender`, `roles`) values
+('nubiform','SangQChoi','NuBiFoRM','{bcrypt}$2a$10$V5LukKBk2qpzG83VTDkLc.zsRSRdgfvdiLlTNwwPZhMbJnH6S9Hwq','12345678','nubiform@idus.com', 'male', 'ROLE_ADMIN,ROLE_USER');
 
 /*
 insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
