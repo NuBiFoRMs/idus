@@ -2,6 +2,7 @@ package com.nubiform.idus.config.response;
 
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.http.HttpStatus;
 
 @Getter
 @ToString
@@ -25,6 +26,11 @@ public class IdusResponse {
     public IdusResponse(int status, String message) {
         this.status = status;
         this.message = message;
+    }
+
+    public IdusResponse(HttpStatus httpStatus) {
+        this.status = httpStatus.value();
+        this.message = httpStatus.getReasonPhrase();
     }
 
     public static IdusResponse of(String message) {

@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
@@ -28,6 +29,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             log.debug("authentication : {}", authentication.toString());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+            httpServletResponse.setHeader("Authorization", "bearer " + token);
         }
         chain.doFilter(request, response);
     }

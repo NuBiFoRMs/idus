@@ -19,9 +19,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new IdusAuthenticationEntryPoint()) // 401 status
+                .accessDeniedHandler(new IdusAccessDeniedHandler()) // 403 status
+                .and()
                 .authorizeRequests()
                 .antMatchers("/api/**/auth/**").permitAll()
-                .antMatchers("/api/**").hasRole("USER")
+                .antMatchers("/api/**/member/members").hasRole("ADMIN")
+                .antMatchers("/api/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/swagger-ui/**").permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
