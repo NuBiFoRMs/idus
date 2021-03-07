@@ -3,8 +3,6 @@ package com.nubiform.idus.config.error;
 import com.nubiform.idus.config.response.IdusErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MissingRequestCookieException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,20 +35,6 @@ public class ErrorControllerAdvice {
     public IdusErrorResponse noHandlerFoundExceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.debug("message : {}", ex.getMessage());
         return idusExceptionHandle(request, response, new IdusException(HttpStatus.NOT_FOUND));
-    }
-
-    // 일단추가
-    @ExceptionHandler(AuthenticationException.class)
-    public IdusErrorResponse authenticationExceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        log.debug("message : {}", ex.getMessage());
-        return idusExceptionHandle(request, response, new IdusException(HttpStatus.UNAUTHORIZED));
-    }
-
-    // 일단추가
-    @ExceptionHandler(AccessDeniedException.class)
-    public IdusErrorResponse accessDeniedExceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        log.debug("message : {}", ex.getMessage());
-        return idusExceptionHandle(request, response, new IdusException(HttpStatus.FORBIDDEN));
     }
 
     @ExceptionHandler(Exception.class)
