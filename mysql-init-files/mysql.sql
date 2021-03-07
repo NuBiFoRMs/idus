@@ -40,46 +40,26 @@ CREATE USER `write`;
 ALTER USER `write` IDENTIFIED WITH mysql_native_password BY 'write';
 GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO `write`;
 
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`, `gender`, `roles`) values
-('nubiform','SangQChoi','NuBiFoRM','{bcrypt}$2a$10$V5LukKBk2qpzG83VTDkLc.zsRSRdgfvdiLlTNwwPZhMbJnH6S9Hwq','12345678','nubiform@idus.com', 'male', 'ROLE_ADMIN,ROLE_USER');
+insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`,`roles`) values
+('admin','admin','admin','{bcrypt}$2a$10$w071.YfVeUe7pantEN95iOuuFRjpTrB0WrD1flxZIaesXUQKed54G','0000','admin@idus.com', 'ROLE_ADMIN');
 
-/*
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform00','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
+insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`,`roles`) values
+('user','user','user','{bcrypt}$2a$10$e8KKOD7572GQvZFE15sTpeBJN6d6jZEcxhZs9YJbnG/3iFjY3.voe','0000','user@idus.com', 'ROLE_USER');
 
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform01','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
+insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`,`gender`,`roles`) values
+('testusera','testusera','testusera','{bcrypt}$2a$10$8f.bxwdk1ysDnkqnp6HKCO7MaOPVoSPYsubwb5JNob/IwNJ7UMgIe','0000','user@idus.com', 'male', 'ROLE_USER');
 
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform02','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
+insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`,`gender`,`roles`) values
+('testuserb','testuserb','testuserb','{bcrypt}$2a$10$8f.bxwdk1ysDnkqnp6HKCO7MaOPVoSPYsubwb5JNob/IwNJ7UMgIe','0000','user@idus.com', 'male', 'ROLE_USER');
 
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform03','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
+insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`,`gender`,`roles`) values
+('testuserc','testuserc','testuserc','{bcrypt}$2a$10$8f.bxwdk1ysDnkqnp6HKCO7MaOPVoSPYsubwb5JNob/IwNJ7UMgIe','0000','user@idus.com', 'male', 'ROLE_USER');
 
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform04','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
+insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`,`gender`,`roles`) values
+('testuserd','testuserd','testuserd','{bcrypt}$2a$10$8f.bxwdk1ysDnkqnp6HKCO7MaOPVoSPYsubwb5JNob/IwNJ7UMgIe','0000','user@idus.com', 'male', 'ROLE_USER');
 
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform05','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
-
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform06','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
-
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform07','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
-
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform08','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
-
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform09','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
-
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform10','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
-
-insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`) values
-('nubiform11','SangQChoi','NuBiFoRM','{SHA-256}f9fc2c5b17b3ae07f1837531db364c8134755dfdde3badc52d26d1142ffc03c2','12345678','nubiform@abc.com');
-*/
+insert  into `members`(`memberId`,`memberName`,`nickName`,`password`,`phone`,`email`,`gender`,`roles`) values
+('testusere','testusere','testusere','{bcrypt}$2a$10$8f.bxwdk1ysDnkqnp6HKCO7MaOPVoSPYsubwb5JNob/IwNJ7UMgIe','0000','user@idus.com', 'male', 'ROLE_USER');
 
 /*
 insert  into `orders`(`orderNumber`,`productName`,`paymentDate`,`memberId`) values
