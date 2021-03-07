@@ -1,27 +1,45 @@
-# Project Title / 프로젝트 이름
+# Idus 개발 과제
 
 **[뱃지나 프로젝트에 관한 이미지들이 이 위치에 들어가면 좋습니다]**  
 One Paragraph of project description goes here / 프로젝트의 전반적인 내용에 대한 요약을 여기에 적습니다
 
 ## Getting Started / 어떻게 시작하나요?
 
-이 곳에서 설치에 관련된 이야기를 해주시면 좋습니다.
-
 ### Prerequisites / 선행 조건
 
 아래 사항들이 설치가 되어있어야합니다.
 
+* JDK 11
+* Gradle
+* Docker
+* Docker Composer
+
+도커 컨테이너 실행 (mysql, redis)
+
 ```
-예시
+$ docker-composer up -d
 ```
 
-### Installing / 설치
+### Installing & Run / 설치 및 실행
 
-아래 사항들로 현 프로젝트에 관한 모듈들을 설치할 수 있습니다.
+프로젝트 빌드 및 실행
+
+#### 실행 1
 
 ```
-예시
+$ gradle build
+$ java -jar build/libs/idus-0.0.1-SNAPSHOT.jar
 ```
+
+#### 실행 2
+
+```
+$ gradle bootRun
+```
+#### 브라우저
+
+* [http://localhost:8080](http://localhost:8080)
+* [http://localhost:8080/swagger-ui.html](localhost:8080/swagger-ui.html)
 
 ## Running the tests / 테스트의 실행
 
@@ -32,13 +50,7 @@ One Paragraph of project description goes here / 프로젝트의 전반적인 �
 왜 이렇게 동작하는지, 설명합니다
 
 ```
-예시
-```
-
-### 테스트는 이런 식으로 작성하시면 됩니다
-
-```
-예시
+$ gradle test
 ```
 
 ## Deployment / 배포
