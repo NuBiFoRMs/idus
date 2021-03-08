@@ -23,6 +23,17 @@ $ docker-composer up -d
 해당 스크립트는 `Docker`를 통해 `mysql`이 실행될때 자동으로 수행됩니다.  
 `mysql` 쓰기 전용 서버와 읽기 전용 서버 `replication` 설정을 쓰기 전용 유저 `write`, 읽기 전용 유저 `read-only` 구성으로 대체 하였습니다.
 
+######Sample Data / 샘플 데이터
+
+테스트를 위한 계정이 생성되어 있습니다.
+
+|meberId|password|roles|
+|---|---|---|
+|admin|admin|ROLE_ADMIN,ROLE_USER|
+|testusera|!Q2w3e4r5t|ROLE_USER|
+|testuserb|!Q2w3e4r5t|ROLE_USER|
+| | ... | |
+|testusere|!Q2w3e4r5t|ROLE_USER|
 
 ### Build & Run / 빌드 및 실행
 
