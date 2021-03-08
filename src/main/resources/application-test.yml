@@ -8,16 +8,6 @@ logging:
   level:
     com.nubiform: DEBUG
 
-mybatis:
-  mapper-locations: classpath:/query/*.xml
-
-# swagger-ui custom path
-springdoc.swagger-ui.path: /swagger-ui.html
-
-management:
-  #endpoints.web.exposure.include: caches, health, metrics
-  endpoints.web.exposure.include: '*'
-
 idus:
   datasource:
     read-only:
