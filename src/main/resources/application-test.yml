@@ -1,0 +1,21 @@
+spring:
+  profiles:
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+logging:
+  level:
+    com.nubiform: DEBUG
+
+idus:
+  datasource:
+    read-only:
+      jdbc-url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+      username: sa
+      password: sa
+
+    write:
+      jdbc-url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+      username: sa
+      password: sa

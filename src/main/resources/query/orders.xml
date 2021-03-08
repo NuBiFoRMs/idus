@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nubiform.idus.api.order.repository.OrderMapper">
+    <select id="getOrders" resultType="com.nubiform.idus.api.order.model.Order">
+        SELECT orderNumber
+        , productName
+        , paymentDate
+        , memberId
+        FROM orders
+        WHERE 1 = 1
+        <if test="memberId != null and memberId != ''">
+            AND memberId = #{memberId}
+        </if>
+    </select>
+
+    <select id="getMemberOrders" resultType="com.nubiform.idus.api.order.model.MemberOrder">
+        SELECT RNUM.*
+          FROM (
+        SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM
+             , RST.*
+          FROM (
+        SELECT mem.memberId
+             , mem.memberName
+             , mem.nickName
+             , mem.phone
+             , mem.email
+             , mem.gender
+             , ord.orderNumber
+             , ord.productName
+             , ord.paymentDate
+          FROM members mem
+             , (SELECT orderNumber, productName, paymentDate, memberId
+                     , ROW_NUMBER() OVER(PARTITION BY memberId ORDER BY paymentDate DESC, orderNumber DESC) LAST_ORDER
+                  FROM orders
+               ) ord
+         WHERE mem.memberId = ord.memberId
+           AND LAST_ORDER = 1
+        <if test="memberName != null and memberName != ''">
+            AND mem.memberName = #{memberName}
+        </if>
+        <if test="email != null and email != ''">
+            AND email = #{email}
+        </if>
+         ORDER BY memberName
+               ) RST, (SELECT @ROWNUM := 0) R
+               ) RNUM
+         WHERE ROWNUM BETWEEN (#{pageable.page} - 1) * #{pageable.size} + 1 AND #{pageable.page} * #{pageable.size}
+    </select>
+</mapper>
