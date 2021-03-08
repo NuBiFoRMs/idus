@@ -3,6 +3,7 @@ package com.nubiform.idus.api.auth.controller;
 import com.nubiform.idus.api.auth.model.Auth;
 import com.nubiform.idus.api.auth.model.Sign;
 import com.nubiform.idus.api.auth.service.AuthService;
+import com.nubiform.idus.api.auth.service.TokenService;
 import com.nubiform.idus.api.member.model.Member;
 import com.nubiform.idus.config.error.IdusException;
 import com.nubiform.idus.config.response.IdusErrorResponse;
@@ -23,7 +24,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +43,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+
+    private final TokenService tokenService;
 
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -72,21 +74,16 @@ public class AuthController {
     @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.",
             security = @SecurityRequirement(name = "Authorization"))
     public IdusResponse signOut(@Parameter(hidden = true) @AuthenticationPrincipal Auth auth) {
-        try {
-            String token = auth.getToken();
+        String token = auth.getToken();
 
-            log.debug(SecurityContextHolder.getContext().getAuthentication().toString());
-            log.debug("token : {}", token);
+        log.debug("token : {}", token);
 
-            if (token == null || "".equals(token))
-                throw IdusException.of("there is no authentication");
-
-            if (authService.signOut(token))
-                return new IdusResponse();
-            else
-                return new IdusErrorResponse();
-        } catch (Exception ex) {
+        if (token == null || "".equals(token))
             throw IdusException.of("there is no authentication");
-        }
+
+        if (tokenService.removeToken(auth.getMemberId()))
+            return new IdusResponse();
+        else
+            return new IdusErrorResponse();
     }
 }
