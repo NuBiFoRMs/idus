@@ -10,6 +10,7 @@ import com.nubiform.idus.config.response.IdusResponse;
 import com.nubiform.idus.config.security.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -21,6 +22,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,9 +71,8 @@ public class AuthController {
     @PostMapping("/sign-out")
     @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.",
             security = @SecurityRequirement(name = "Authorization"))
-    public IdusResponse signOut() {
+    public IdusResponse signOut(@Parameter(hidden = true) @AuthenticationPrincipal Auth auth) {
         try {
-            Auth auth = (Auth) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String token = auth.getToken();
 
             log.debug(SecurityContextHolder.getContext().getAuthentication().toString());
