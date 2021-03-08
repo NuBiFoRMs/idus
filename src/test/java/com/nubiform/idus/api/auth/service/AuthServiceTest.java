@@ -125,10 +125,4 @@ class AuthServiceTest {
     void signUp() {
 
     }
-
-    @Test
-    @DisplayName("회원 로그아웃")
-    void signOut() {
-
-    }
 }

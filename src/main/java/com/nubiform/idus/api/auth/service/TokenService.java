@@ -15,12 +15,6 @@ public class TokenService {
     private final StringRedisTemplate redisTemplate;
 
     @Transactional
-    public String getToken(String memberId) {
-        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        return valueOperations.get(memberId);
-    }
-
-    @Transactional
     public boolean setToken(String memberId, String token) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(memberId, token);

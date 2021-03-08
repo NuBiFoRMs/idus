@@ -2,13 +2,13 @@ package com.nubiform.idus;
 
 import com.nubiform.idus.api.auth.model.Auth;
 import com.nubiform.idus.api.auth.service.AuthService;
+import com.nubiform.idus.api.auth.service.TokenService;
 import com.nubiform.idus.config.error.ErrorControllerAdvice;
 import com.nubiform.idus.config.security.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.security.config.BeanIds;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,6 +21,7 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 import javax.servlet.ServletException;
 import java.nio.charset.StandardCharsets;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -38,11 +39,11 @@ public abstract class AbstractControllerTest {
     @MockBean
     protected AuthService authService;
 
+    @MockBean
+    protected TokenService tokenService;
+
     @Autowired
     protected JwtTokenProvider jwtTokenProvider;
-
-    @MockBean
-    protected StringRedisTemplate redisTemplate;
 
     @BeforeEach
     private void setup() throws ServletException {
@@ -69,6 +70,8 @@ public abstract class AbstractControllerTest {
         auth.setRoles("ROLE_USER,ROLE_ADMIN");
         when(authService.getAuth("useradmin")).thenReturn(auth);
 
-//        when(redisTemplate.opsForValue()).thenReturn();
+        when(tokenService.setToken(any(), any())).thenReturn(true);
+        when(tokenService.removeToken(any())).thenReturn(true);
+        when(tokenService.validateToken(any(), any())).thenReturn(true);
     }
 }
