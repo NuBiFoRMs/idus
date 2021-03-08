@@ -1,13 +1,11 @@
 idus:
   datasource:
     read-only:
-      #      data-source-class-name: com.mysql.cj.jdbc.Driver
       jdbc-url: jdbc:mysql://localhost:3306/idus
       username: readonly
       password: readonly
 
     write:
-      #data-source-class-name: com.mysql.cj.jdbc.Driver
       jdbc-url: jdbc:mysql://localhost:3306/idus
       username: write
       password: write
