@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,12 +29,10 @@ class AuthServiceTest {
 
     @MockBean
     private PasswordEncoder passwordEncoder;
-    @MockBean
-    private StringRedisTemplate redisTemplate;
 
     @BeforeEach
     void before() {
-        this.authService = new AuthService(memberMapper, authMapper, passwordEncoder,redisTemplate);
+        this.authService = new AuthService(memberMapper, authMapper, passwordEncoder);
     }
 
     @Test
