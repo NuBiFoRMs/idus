@@ -8,8 +8,6 @@ import com.nubiform.idus.api.member.repository.MemberMapper;
 import com.nubiform.idus.config.error.IdusException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +22,6 @@ public class AuthService {
     private final AuthMapper authMapper;
 
     private final PasswordEncoder passwordEncoder;
-    private final StringRedisTemplate redisTemplate;
 
     @Transactional(readOnly = true)
     public Auth signIn(Sign sign) {
@@ -95,13 +92,6 @@ public class AuthService {
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         memberMapper.setMember(member);
 
-        return true;
-    }
-
-    @Transactional
-    public boolean signOut(String token) {
-        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(token, token);
         return true;
     }
 }
