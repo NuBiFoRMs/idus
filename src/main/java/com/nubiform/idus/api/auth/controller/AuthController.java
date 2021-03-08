@@ -74,16 +74,21 @@ public class AuthController {
     @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.",
             security = @SecurityRequirement(name = "Authorization"))
     public IdusResponse signOut(@Parameter(hidden = true) @AuthenticationPrincipal Auth auth) {
-        String token = auth.getToken();
+        try {
+            String token = auth.getToken();
 
-        log.debug("token : {}", token);
+            log.debug("token : {}", token);
 
-        if (token == null || "".equals(token))
+            if (token == null || "".equals(token))
+                throw IdusException.of("there is no authentication");
+
+            if (tokenService.removeToken(auth.getMemberId()))
+                return new IdusResponse();
+            else
+                return new IdusErrorResponse();
+        }
+        catch (Exception ex) {
             throw IdusException.of("there is no authentication");
-
-        if (tokenService.removeToken(auth.getMemberId()))
-            return new IdusResponse();
-        else
-            return new IdusErrorResponse();
+        }
     }
 }
