@@ -1,5 +1,7 @@
 # Idus 개발 과제
 
+요구사항 문서는 [여기](REQUIREMENT.md)를 참고해 주세요.
+
 ## Getting Started / 어떻게 시작하나요?
 
 ### Prerequisites / 선행 조건
