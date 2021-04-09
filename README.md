@@ -1,4 +1,6 @@
-# Idus 개발 과제
+# 고객, 주문관리 RestFul Back-End API 개발과제
+
+요구사항 문서는 [여기](https://github.com/NuBiFoRMs/idus/wiki/Requirement)를 참고해 주세요.
 
 ## Getting Started / 어떻게 시작하나요?
 
