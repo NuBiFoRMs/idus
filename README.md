@@ -1,4 +1,16 @@
-# 고객, 주문관리 RestFul Back-End API 개발과제
+# 고객, 주문관리 RESRful Back-End API 개발과제
+
+![Tag](https://img.shields.io/github/v/tag/nubiforms/idus)
+![Travis](https://img.shields.io/travis/com/nubiforms/idus)
+
+![Languages Count](https://img.shields.io/github/languages/count/nubiforms/idus)
+![Languages Top](https://img.shields.io/github/languages/top/nubiforms/idus)
+![Issues](https://img.shields.io/github/issues/nubiforms/idus)
+![Issues Closed](https://img.shields.io/github/issues-closed/nubiforms/idus)
+![Issues PR](https://img.shields.io/github/issues-pr/nubiforms/idus)
+![Issues PR Closed](https://img.shields.io/github/issues-pr-closed/nubiforms/idus)
+![Commit Activity](https://img.shields.io/github/commit-activity/m/nubiforms/idus)
+![Last Commit](https://img.shields.io/github/last-commit/nubiforms/idus)
 
 요구사항 문서는 [여기](https://github.com/NuBiFoRMs/idus/wiki/Requirement)를 참고해 주세요.
 
