@@ -4,7 +4,7 @@ cache:
   - .autoconf
   - $HOME/.m2
   - $HOME/.gradle
-script: gradle test -i
+script: ./gradlew test -i
 
 before_install:
   - chmod +x gradlew
