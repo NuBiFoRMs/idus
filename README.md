@@ -1,18 +1,18 @@
 # 고객, 주문관리 RESRful Back-End API 개발과제
 
-![Tag](https://img.shields.io/github/v/tag/nubiforms/idus)
-![Travis](https://img.shields.io/travis/com/nubiforms/idus)
+![Tag](https://img.shields.io/github/v/tag/nubiforms/order-management-restful)
+![Travis](https://img.shields.io/travis/com/nubiforms/order-management-restful)
 
-![Languages Count](https://img.shields.io/github/languages/count/nubiforms/idus)
-![Languages Top](https://img.shields.io/github/languages/top/nubiforms/idus)
-![Issues](https://img.shields.io/github/issues/nubiforms/idus)
-![Issues Closed](https://img.shields.io/github/issues-closed/nubiforms/idus)
-![Issues PR](https://img.shields.io/github/issues-pr/nubiforms/idus)
-![Issues PR Closed](https://img.shields.io/github/issues-pr-closed/nubiforms/idus)
-![Commit Activity](https://img.shields.io/github/commit-activity/m/nubiforms/idus)
-![Last Commit](https://img.shields.io/github/last-commit/nubiforms/idus)
+![Languages Count](https://img.shields.io/github/languages/count/nubiforms/order-management-restful)
+![Languages Top](https://img.shields.io/github/languages/top/nubiforms/order-management-restful)
+![Issues](https://img.shields.io/github/issues/nubiforms/order-management-restful)
+![Issues Closed](https://img.shields.io/github/issues-closed/nubiforms/order-management-restful)
+![Issues PR](https://img.shields.io/github/issues-pr/nubiforms/order-management-restful)
+![Issues PR Closed](https://img.shields.io/github/issues-pr-closed/nubiforms/order-management-restful)
+![Commit Activity](https://img.shields.io/github/commit-activity/m/nubiforms/order-management-restful)
+![Last Commit](https://img.shields.io/github/last-commit/nubiforms/order-management-restful)
 
-요구사항 문서는 [여기](https://github.com/NuBiFoRMs/idus/wiki/Requirement)를 참고해 주세요.
+요구사항 문서는 [여기](https://github.com/NuBiFoRMs/order-management-restful/wiki/Requirement)를 참고해 주세요.
 
 ## Getting Started / 어떻게 시작하나요?
 
